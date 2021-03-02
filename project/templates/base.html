@@ -11,13 +11,17 @@
 </head>
 
 <body>
-    <section class="hero is-primary is-fullheight" style="background-color: #5288fb;">
+    <section class="hero is-primary is-fullheight" >
 
-        <div class="hero-head">
+        <div class="hero-head" style="background-color: #5288fb;">
             <nav class="navbar">
                 <div class="container">
 
-                    <div id="navbarMenuHeroA" class="navbar-menu">
+                    <div id="navbarMenuHeroA" class="navbar-menu" style="height: 53px;">
+                        <a class="navbar" href="{{ url_for('auth.login') }}" > 
+                            <img src = "static/graphics/Caled-Logo.png" width="50px" style="padding: 5px;">
+                        </a>
+
                         <div class="navbar-end">
                             <a href="{{ url_for('main.index') }}" class="navbar-item">
                                 Home
@@ -46,7 +50,7 @@
             </nav>
         </div>
 
-        <div class="hero-body">
+        <div class="hero-body" style="background-color: white;" >
             <div class="container has-text-centered">
                {% block content %}
                {% endblock %}

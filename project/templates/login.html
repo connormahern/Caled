@@ -1,8 +1,15 @@
 
 {% extends "base.html" %}
 
+{% block styles %}
+{{ super() }}
+<style>
+    .body{background-color: #5288fb;}
+</style>
+{% endblock %}
+
 {% block content %}
-<div class="column is-4 is-offset-4" style="background-color: #5288fb;">
+<div class="column is-4 is-offset-4">
     <h3 class="title">Caled</h3>
     <div class="box" >
         {% with messages = get_flashed_messages() %}
@@ -35,3 +42,4 @@
     </div>
 </div>
 {% endblock %}
+
