@@ -11,4 +11,27 @@ def index():
 @main.route('/profile')
 @login_required
 def profile():
+
     return render_template('profile.html', name=current_user.name)
+
+#def assignment
+
+#def calender
+
+#def courses
+
+#def messgaes
+
+#Find ways to verify that this person is admin
+#def admin_add_to_organzation
+    #search function for admins to find sutdents and add them to a specific organization
+    #only searching for student on the entire platform
+    
+
+
+
+
+
+
+
+
