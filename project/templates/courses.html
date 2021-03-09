@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div>
+    {% for c in course %}
+    <div style="color: black; padding: 10; background-color: bisque;">
+       
+            <h1 style="color: black;"> {{ c.name }}</h1>
+            <p style="color: black;"> {{ c.teacherId }}</p>
+            <p style="color: black;" >{{ c.enrolledId }}</p>
+        
+    </div>
+    {% endfor %}
+
+</div>
+
+
+
+
+{% endblock %}
