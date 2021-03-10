@@ -23,6 +23,27 @@ course = [
         'teacherId' : 501,
         'enrolledId' : [1006, 1007, 1008, 1009, 1010, 1011]
 
+    } , 
+    {
+        'id' : 101,
+        'name' : 'C101 - Intro to Biology',
+        'teacherId' : 501,
+        'enrolledId' : [1006, 1007, 1008, 1009, 1010, 1011]
+
+    }, 
+    {
+        'id' : 101,
+        'name' : 'C101 - Intro to Biology',
+        'teacherId' : 501,
+        'enrolledId' : [1006, 1007, 1008, 1009, 1010, 1011]
+
+    }, 
+    {
+        'id' : 101,
+        'name' : 'C101 - Intro to Biology',
+        'teacherId' : 501,
+        'enrolledId' : [1006, 1007, 1008, 1009, 1010, 1011]
+
     }
 
 ]
@@ -54,6 +75,11 @@ def mainP():
 def messages():
     #This is our main page for messages
     return render_template('messages.html', name=current_user.name)
+
+@main.route('/temp')
+def temp():
+    #This is a temporary page
+    return render_template('temp.html')
 
 
 #def assignment

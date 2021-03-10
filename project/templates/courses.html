@@ -2,17 +2,19 @@
 
 {% block content %}
 
-<div>
+<div class="card-deck" style="padding-top: 10px;">
+    
     {% for c in course %}
-    <div style="color: black; padding: 10; background-color: bisque;">
-       
-            <h1 style="color: black;"> {{ c.name }}</h1>
-            <p style="color: black;"> {{ c.teacherId }}</p>
-            <p style="color: black;" >{{ c.enrolledId }}</p>
-        
+    <div class="card bg-light mb-3">
+        <div class="card-body">
+        <h5 class="card-header mb-3">{{ c.name }}</h5>
+        <h6 class="card-title">Instructor {{c.teacherId}}</h6>
+        <p class="card-text">{{ c.enrolledId }}</p>
+        <a href="#" class="btn btn-primary" >See Course Main Page</a>
+        </div>
     </div>
     {% endfor %}
-
+    
 </div>
 
 
