@@ -1,8 +1,7 @@
 
-from flask import Blueprint, render_template, redirect, url_for, request, flash, session
+from flask import Blueprint, render_template, redirect, url_for, request, flash, session, jsonify
 from flask_login import login_required, current_user
 from .models import Course, User
-
 
 main = Blueprint('main', __name__)
 
@@ -62,6 +61,47 @@ def profile():
 @login_required
 def courses():
 
+    #Find Authincated Value for Student Teacher or Adimn
+    #acess = sessions['access_var'] --> could 'Student' , 'Teacher', or 'Adim'
+    #user_id = session['id']
+    #user_email = session['email']
+    #user_email = session['email']
+
+
+    #if acess == student : 
+        #Shouldnt have acess to list of other student/ all course grade
+
+        #list_assignments = some sql query that returns a list of assignments
+        #student_grades = 
+        ##list_studentid = 
+
+
+        #returning template = courses_student.html
+    #elif teacher :
+        #Shouldnt have acess to list of other student/ all course grade
+        #List of assignments with grades
+
+        #student_grades = [[id, assignment_num, grade], [id, assignment_num, grade]]
+
+
+
+        #return render_template('courses_teacher.html', students_grades=students_grades)
+    # elif admin :
+
+
+
+        #return render_template('courses_admin.html', course=course)
+
+
+
+
+    #sudentsEnrolled = course.enrroledID
+    #Instructor[] = [course.instructorIN, teachers name, teachers email]
+    #course_times = 
+    #assignments = course[assigments]
+
+    
+
     return render_template('courses.html', course=course)
 
 @main.route('/index')
@@ -76,10 +116,11 @@ def messages():
     #This is our main page for messages
     return render_template('messages.html', name=current_user.name)
 
-@main.route('/temp')
-def temp():
+@main.route('/calendar-events')
+@login_required
+def calendar_events():
     #This is a temporary page
-    return render_template('temp.html')
+    return render_template('calendar.html')
 
 
 #def assignment
