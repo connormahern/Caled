@@ -3,11 +3,10 @@ from flask import Blueprint, render_template, redirect, url_for, request, flash,
 from flask_login import login_required, current_user
 from .models import Course, User
 from flask_sqlalchemy import SQLAlchemy
-from .__init__ import db
+from .__init__ import create_app, db
 
-main = Blueprint('main', __name__)
+main = __init__.create_app()
 engine = create_engine('sqlite:///db.sqlite')
-
 
 
 #This can be a sample for of data that is in class course, we could query a table where user.id in enrolledID
