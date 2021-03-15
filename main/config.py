@@ -20,6 +20,6 @@ config = {
 }
 
 def configure_app(app):
-    config_name= os.getenv('venv')
+    config_name= os.getenv('FLAAK_VENV')
     app.config.from_object(config[config_name])
     app.config.from_pyfile('application.cfg', silent=True)
