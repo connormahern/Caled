@@ -7,11 +7,11 @@ from main.config import configure_app
 
 # init SQLAlchemy so we can use it later in our models
 db = SQLAlchemy()
+app = Flask( __name__ , instance_relative_config=True)
+configure_app(app)
 
 def create_app():
-    app = Flask(__name__, instance_relative_config=True)
-    configure_app(app)
-
+    
     db.init_app(app)
 
     login_manager = LoginManager()
