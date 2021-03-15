@@ -1,8 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
-from flask_bootstrap import Bootstrap
-from app.config import configure_app
+from main.config import configure_app
  
 
 
