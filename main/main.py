@@ -1,8 +1,8 @@
 
-from flask import Blueprint, render_template, redirect, url_for, request, flash, session, jsonify, Flask
-from flask_login import login_required, current_user
+from Flask import Blueprint, render_template, redirect, url_for, request, flash, session, jsonify, Flask
+from Flask_login import login_required, current_user
 from .models import Course, User
-#from flask_sqlalchemy import SQLAlchemy
+from Flask_sqlalchemy import SQLAlchemy
 
 main = Blueprint('main', __name__)
 #engine = create_engine('sqlite:///db.sqlite')
