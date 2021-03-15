@@ -2,6 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_bootstrap import Bootstrap
+from app.config import configure_app
  
 
 
@@ -9,10 +10,8 @@ from flask_bootstrap import Bootstrap
 db = SQLAlchemy()
 
 def create_app():
-    app = Flask(__name__)
-
-    app.config['SECRET_KEY'] = b'\xe0\xc3\x98\xdbH\xbd\x12E\xc4u\x84c\xfb\x1f\xa1h'
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
+    app = Flask(__name__, instance_relative_config=True)
+    configure_app(app)
 
     db.init_app(app)
 

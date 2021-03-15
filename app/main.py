@@ -3,10 +3,9 @@ from flask import Blueprint, render_template, redirect, url_for, request, flash,
 from flask_login import login_required, current_user
 from .models import Course, User
 from flask_sqlalchemy import SQLAlchemy
-from .__init__ import create_app, db
 
-main = __init__.create_app()
-engine = create_engine('sqlite:///db.sqlite')
+main = Blueprint('main', __name__)
+#engine = create_engine('sqlite:///db.sqlite')
 
 
 #This can be a sample for of data that is in class course, we could query a table where user.id in enrolledID
@@ -125,23 +124,23 @@ def messages():
 @login_required
 def calendar_events():
     #This is a temporary page
-    conn = None
-    cursor = None
-    try :
-        conn = engine.connect()
-        cursor = conn.cursor()
-        cursor.execute("SELECT id, title, url FROM event")
-        rows = cursor.fetchall()
-        resp = jsonify({'success' : 1, 'result' : rows})
-        resp.status_code = 200
-        return resp
+    # conn = None
+    # cursor = None
+    # try :
+    #     conn = engine.connect()
+    #     cursor = conn.cursor()
+    #     cursor.execute("SELECT id, title, url FROM event")
+    #     rows = cursor.fetchall()
+    #     resp = jsonify({'success' : 1, 'result' : rows})
+    #     resp.status_code = 200
+    #     return resp
 
-    except Exception as e :
-        print(e)
+    # except Exception as e :
+    #     print(e)
     
-    finally :
-        cursor.close()
-        conn.close()
+    # finally :
+    #     cursor.close()
+    #     conn.close()
 
 
     
