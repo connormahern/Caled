@@ -29,9 +29,9 @@ def create_app(config_name):
     
     from .models import User
     migrate = Migrate(app, db)
-    #@app.before_first_request
-    #def create_tables():
-        #db.create_all()
+    @app.before_first_request
+    def create_tables():
+        db.create_all()
 
     @login_manager.user_loader
     def load_user(user_id):
