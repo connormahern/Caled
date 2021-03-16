@@ -3,8 +3,8 @@ from flask import Blueprint, render_template, redirect, url_for, request, flash,
 from flask_login import login_required, current_user
 from .models import Course, User
 from flask_sqlalchemy import SQLAlchemy
+from app import app , db
 
-main = Blueprint('main', __name__)
 #engine = create_engine('sqlite:///db.sqlite')
 
 
@@ -51,17 +51,17 @@ course = [
 
 # Adding Course Events to DB
 
-@main.route('/')
+@app.route('/')
 def index():
     return render_template('index.html')
 
-@main.route('/profile')
+@app.route('/profile')
 @login_required
 def profile():
 
     return render_template('profile.html', name=current_user.name)
 
-@main.route('/courses')
+@app.route('/courses')
 @login_required
 def courses():
 
@@ -108,19 +108,19 @@ def courses():
 
     return render_template('courses.html', course=course)
 
-@main.route('/index')
+@app.route('/index')
 @login_required
-def mainP():
+def MainP():
     #This is our main page for calander and general organization
     return render_template('index.html', name=current_user.name)
 
-@main.route('/messages')
+@app.route('/messages')
 @login_required
 def messages():
     #This is our main page for messages
     return render_template('messages.html', name=current_user.name)
 
-@main.route('/calendar-events')
+@app.route('/calendar-events')
 @login_required
 def calendar_events():
     #This is a temporary page

@@ -15,20 +15,21 @@ def create_app(config_name):
     
     app = Flask( __name__ , instance_relative_config=True)
     app.config.from_object(app_config[config_name])
-    app.config.from_pyfile('config.py')
+    app.config.from_pyfile('config.py', silent=True)
     app.config['SECRET_KEY'] = b'\xe0\xc3\x98\xdbH\xbd\x12E\xc4u\x84c\xfb\x1f\xa1h'
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://yirwlcakkvzlkl:a74296c1f39e18cf08f12fdf4e52a395f9f207c9c1c5c6a9ba51d6a79ca2cda0@ec2-35-168-198-9.compute-1.amazonaws.com:5432/d1ppu0r0g0loa1'
     
     db = SQLAlchemy(app)
-    db.init_app(app)
     migrate = Migrate(app, db)
+    db.init_app(app)
+   
 
     login_manager = LoginManager()
     login_manager.login_view = 'auth.login'
     login_manager.init_app(app)
     
-    from .models import User
-    migrate = Migrate(app, db)
+    import app.models
+    
     @app.before_first_request
     def create_tables():
         db.create_all()
