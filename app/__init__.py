@@ -13,7 +13,7 @@ import os
 
 def create_app(config_name):
     
-    app = Flask( __name__ , instance_path = '/Users/connormahern/Desktop/Caled/app/instance', instance_relative_config=True)
+    app = Flask( __name__ , instance_relative_config=True)
     app.config.from_object(app_config[config_name])
     app.config.from_pyfile('config.py')
     app.config['SECRET_KEY'] = b'\xe0\xc3\x98\xdbH\xbd\x12E\xc4u\x84c\xfb\x1f\xa1h'
