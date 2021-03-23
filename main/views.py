@@ -8,6 +8,7 @@ from main import db
 #engine = create_engine('sqlite:///db.sqlite')
 views = Blueprint('views', __name__)
 
+
 #This can be a sample for of data that is in class course, we could query a table where user.id in enrolledID
 course = [
 

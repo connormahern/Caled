@@ -8,6 +8,7 @@ import os
 
 
 db = SQLAlchemy()
+app = Flask(__name__)
 
 # init SQLAlchemy so we can use it later in our models
 def create_app(config_name):
