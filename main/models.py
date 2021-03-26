@@ -23,7 +23,7 @@ class User(UserMixin, db.Model):
         return f"User('{self.name}','{self.email}', '{self.hasAccess}')"
 
 
-class Admin(UserMixin, db.Model):
+""" class Admin(UserMixin, db.Model):
 
     __tablename__ = 'Admin'
 
@@ -34,9 +34,9 @@ class Admin(UserMixin, db.Model):
     
 
     def __repr__(self):
-        return f"Admin('{self.name}','{self.email}')"
+        return f"Admin('{self.name}','{self.email}')" """
         
-class Instructor(UserMixin, db.Model):
+""" class Instructor(UserMixin, db.Model):
 
     __tablename__ = 'Instructor'
 
@@ -127,7 +127,7 @@ class File(UserMixin, db.Model):
 
     def __repr__(self):
         return f"File('{self.name}', '{self.file_type}')"        
-
+ """
 
 #def access(): #method for admin to grant access to user (i.e. move a user row to a instructor/student table)
     #needs to gain access to all users (not instructor/admins/students) in user table

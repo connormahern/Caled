@@ -64,3 +64,18 @@
 2021-03-26 15:32:23.189 EDT [1959] LOG:  database system was shut down at 2021-03-25 15:29:47 EDT
 2021-03-26 15:32:23.200 EDT [1958] LOG:  database system is ready to accept connections
 2021-03-26 15:40:32.782 EDT [2083] FATAL:  database "Caled" does not exist
+2021-03-26 15:44:09.661 EDT [2147] ERROR:  cannot drop table "Instructor" because other objects depend on it
+2021-03-26 15:44:09.661 EDT [2147] DETAIL:  constraint Course_instructor_id_fkey on table "Course" depends on table "Instructor"
+2021-03-26 15:44:09.661 EDT [2147] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2021-03-26 15:44:09.661 EDT [2147] STATEMENT:  
+	DROP TABLE "Instructor"
+2021-03-26 15:45:47.714 EDT [2193] ERROR:  cannot drop table "Instructor" because other objects depend on it
+2021-03-26 15:45:47.714 EDT [2193] DETAIL:  constraint Course_instructor_id_fkey on table "Course" depends on table "Instructor"
+2021-03-26 15:45:47.714 EDT [2193] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2021-03-26 15:45:47.714 EDT [2193] STATEMENT:  
+	DROP TABLE "Instructor"
+2021-03-26 15:48:54.533 EDT [2297] ERROR:  cannot drop table "Instructor" because other objects depend on it
+2021-03-26 15:48:54.533 EDT [2297] DETAIL:  constraint Course_instructor_id_fkey on table "Course" depends on table "Instructor"
+2021-03-26 15:48:54.533 EDT [2297] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2021-03-26 15:48:54.533 EDT [2297] STATEMENT:  
+	DROP TABLE "Instructor"
