@@ -11,7 +11,6 @@ views = Blueprint('views', __name__)
 
 #This can be a sample for of data that is in class course, we could query a table where user.id in enrolledID
 course = [
-
     {
         'id' : 100,
         'name' : 'C100 - Intro to Computer Science',
@@ -45,11 +44,8 @@ course = [
         'name' : 'C101 - Intro to Biology',
         'teacherId' : 501,
         'enrolledId' : [1006, 1007, 1008, 1009, 1010, 1011]
-
     }
-
 ]
-
 # Adding Course Events to DB
 
 @views.route('/')
@@ -60,54 +56,27 @@ def index():
 @login_required
 def profile():
 
-    return render_template('profile.html', name=current_user.name)
+    currentUser  = { 'id' : '10001', 'name' : current_user.name, 'email' : session['email'], 'password' : '********', 'userType' : 'Student'}
 
+    return render_template('profile.html', current=currentUser)
+
+rerouteName = None
 @views.route('/courses')
 @login_required
 def courses():
+    """ if request.method == 'POST' :
+        rerouteName = request.form.get('courseReroute')
+    else : """
+    
+    return render_template('courses.html', course=course)
 
-    #Find Authincated Value for Student Teacher or Adimn
-    #acess = sessions['access_var'] --> could 'Student' , 'Teacher', or 'Adim'
-    #user_id = session['id']
-    #user_email = session['email']
-    #user_email = session['email']
-
-
-    #if acess == student : 
-        #Shouldnt have acess to list of other student/ all course grade
-
-        #list_assignments = some sql query that returns a list of assignments
-        #student_grades = 
-        ##list_studentid = 
-
-
-        #returning template = courses_student.html
-    #elif teacher :
-        #Shouldnt have acess to list of other student/ all course grade
-        #List of assignments with grades
-
-        #student_grades = [[id, assignment_num, grade], [id, assignment_num, grade]]
-
-
-
-        #return render_template('courses_teacher.html', students_grades=students_grades)
-    # elif admin :
-
-
-
-        #return render_template('courses_admin.html', course=course)
-
-
-
-
-    #sudentsEnrolled = course.enrroledID
-    #Instructor[] = [course.instructorIN, teachers name, teachers email]
-    #course_times = 
-    #assignments = course[assigments]
-
+@views.route('/coursePage')
+@login_required
+def coursePage():
     
 
-    return render_template('courses.html', course=course)
+
+    return render_template('coursePage.html', rerouteName=rerouteName)
 
 @views.route('/index')
 @login_required
@@ -118,8 +87,72 @@ def MainP():
 @views.route('/messages')
 @login_required
 def messages():
-    #This is our main page for messages
-    return render_template('messages.html', name=current_user.name)
+    message = [ 
+            {
+                'id' : 20000,
+                'name' : "Connor Mahern",
+                'sender' : 'cjmahern@iu.edu',
+                'recipient' : ['ctaddeuc@iu.edu'],
+                'messageText' : 'Group Project! Soon! lets work',
+                'date' : "03-23-2021 11:51 pm",
+                'isRead' : False
+
+            },
+            {
+                'id' : 20001,
+                'name' : "Chris Taddeucci",
+                'sender' : 'ctaddeuc@iu.edu',
+                'recipient' : ['cjmahern@iu.edu'],
+                'messageText' : 'for sure man',
+                'date' : "03-23-2021 11:51 pm",
+                'isRead' : True
+
+            },
+           {
+                'id' : 20002,
+                'name' : "Chris Taddeucci",
+                'sender' : 'teacher@iu.edu',
+                'recipient' : ['ctaddeuc@iu.edu'],
+                'messageText' : "YOU HAVE BAD GRADE",
+                'date' : "03-23-2021 11:51 pm",
+                'isRead' : True
+            },
+            {
+                'id' : 20003,
+                'name' : "Connor Mahern",
+                'sender' : 'cjmahern@iu.edu',
+                'recipient' : ['ctaddeuc@iu.edu', 'teacher@iu.edu'],
+                'messageText' : "The Instructor changed the deadline",
+                'date' : "03-23-2021 11:51 pm",
+                'isRead' : False
+            },
+            {
+
+                'id' : 20004,
+                'name' : "Teacher 1",
+                'sender' : 'teacher@iu.edu',
+                'recipient' : ['ctaddeuc@iu.edu', 'cjmahern@iu.edu'],
+                'messageText' : "Thank you!",
+                'date' : "03-23-2021 11:51 pm",
+                'isRead' : True
+
+            },
+            {
+
+                'id' : 20005,
+                'name' : "Teacher 1",
+                'sender' : 'teacher@iu.edu',
+                'recipient' : ['ctaddeuc@iu.edu', 'cjmahern@iu.edu'],
+                'messageText' : "Thanks for letting me know",
+                'date' : "03-23-2021 11:51 pm",
+                'isRead' : False
+
+            }
+        ]
+    email = session['email']
+
+
+    return render_template('messages.html', message=message, email=email)
 
 @views.route('/calendar-events')
 @login_required

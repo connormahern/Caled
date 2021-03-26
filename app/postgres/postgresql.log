@@ -9,3 +9,58 @@
 2021-03-22 22:47:13.051 EDT [7528] LOG:  unexpected EOF on client connection with an open transaction
 2021-03-22 22:47:13.052 EDT [7503] LOG:  unexpected EOF on client connection with an open transaction
 2021-03-22 22:47:13.052 EDT [7445] LOG:  unexpected EOF on client connection with an open transaction
+2021-03-24 18:54:30.830 EDT [3274] LOG:  starting PostgreSQL 13.2 on x86_64-apple-darwin19.6.0, compiled by Apple clang version 11.0.3 (clang-1103.0.32.62), 64-bit
+2021-03-24 18:54:30.833 EDT [3274] LOG:  listening on IPv6 address "::1", port 5432
+2021-03-24 18:54:30.833 EDT [3274] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2021-03-24 18:54:30.834 EDT [3274] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2021-03-24 18:54:30.841 EDT [3275] LOG:  database system was interrupted; last known up at 2021-03-22 22:46:57 EDT
+2021-03-24 18:54:30.906 EDT [3275] LOG:  database system was not properly shut down; automatic recovery in progress
+2021-03-24 18:54:30.908 EDT [3275] LOG:  redo starts at 0/16513D8
+2021-03-24 18:54:30.908 EDT [3275] LOG:  invalid record length at 0/16514C0: wanted 24, got 0
+2021-03-24 18:54:30.908 EDT [3275] LOG:  redo done at 0/1651488
+2021-03-24 18:54:30.919 EDT [3274] LOG:  database system is ready to accept connections
+2021-03-24 19:25:20.119 EDT [4075] LOG:  unexpected EOF on client connection with an open transaction
+2021-03-24 19:42:13.929 EDT [4104] LOG:  unexpected EOF on client connection with an open transaction
+2021-03-24 19:42:13.929 EDT [4393] LOG:  unexpected EOF on client connection with an open transaction
+2021-03-24 20:02:06.107 EDT [5131] LOG:  unexpected EOF on client connection with an open transaction
+2021-03-24 20:02:06.107 EDT [5123] LOG:  unexpected EOF on client connection with an open transaction
+2021-03-24 20:04:01.319 EDT [5242] LOG:  unexpected EOF on client connection with an open transaction
+2021-03-24 20:04:01.319 EDT [5207] LOG:  unexpected EOF on client connection with an open transaction
+2021-03-24 20:04:01.319 EDT [5208] LOG:  unexpected EOF on client connection with an open transaction
+2021-03-24 20:04:01.320 EDT [5136] LOG:  unexpected EOF on client connection with an open transaction
+2021-03-24 20:04:01.322 EDT [5149] LOG:  unexpected EOF on client connection with an open transaction
+2021-03-24 20:04:01.322 EDT [5150] LOG:  unexpected EOF on client connection with an open transaction
+2021-03-24 20:04:01.322 EDT [5151] LOG:  unexpected EOF on client connection with an open transaction
+2021-03-24 20:04:01.323 EDT [5148] LOG:  unexpected EOF on client connection with an open transaction
+2021-03-24 20:04:01.323 EDT [5147] LOG:  unexpected EOF on client connection with an open transaction
+2021-03-24 20:29:37.279 EDT [5433] LOG:  unexpected EOF on client connection with an open transaction
+2021-03-24 20:29:37.279 EDT [5432] LOG:  unexpected EOF on client connection with an open transaction
+2021-03-24 20:29:37.281 EDT [5247] LOG:  unexpected EOF on client connection with an open transaction
+2021-03-25 11:00:26.595 EDT [6072] LOG:  unexpected EOF on client connection with an open transaction
+2021-03-25 11:00:26.595 EDT [6074] LOG:  unexpected EOF on client connection with an open transaction
+2021-03-25 11:06:45.462 EDT [8532] LOG:  unexpected EOF on client connection with an open transaction
+2021-03-25 11:55:30.515 EDT [9844] LOG:  unexpected EOF on client connection with an open transaction
+2021-03-25 11:55:30.515 EDT [9819] LOG:  unexpected EOF on client connection with an open transaction
+2021-03-25 12:26:13.198 EDT [9866] LOG:  unexpected EOF on client connection with an open transaction
+2021-03-25 12:26:13.199 EDT [10210] LOG:  unexpected EOF on client connection with an open transaction
+2021-03-25 12:31:10.498 EDT [10803] LOG:  unexpected EOF on client connection with an open transaction
+2021-03-25 13:10:16.647 EDT [11997] LOG:  unexpected EOF on client connection with an open transaction
+2021-03-25 13:10:16.647 EDT [11993] LOG:  unexpected EOF on client connection with an open transaction
+2021-03-25 13:10:16.647 EDT [11915] LOG:  unexpected EOF on client connection with an open transaction
+2021-03-25 13:10:16.649 EDT [11901] LOG:  unexpected EOF on client connection with an open transaction
+2021-03-25 13:10:16.647 EDT [11994] LOG:  unexpected EOF on client connection with an open transaction
+2021-03-25 13:10:16.651 EDT [11851] LOG:  unexpected EOF on client connection with an open transaction
+2021-03-25 13:10:16.647 EDT [11995] LOG:  unexpected EOF on client connection with an open transaction
+2021-03-25 13:10:16.652 EDT [11916] LOG:  unexpected EOF on client connection with an open transaction
+2021-03-25 15:29:47.550 EDT [3274] LOG:  received fast shutdown request
+2021-03-25 15:29:47.553 EDT [3274] LOG:  aborting any active transactions
+2021-03-25 15:29:47.556 EDT [3274] LOG:  background worker "logical replication launcher" (PID 3281) exited with exit code 1
+2021-03-25 15:29:47.557 EDT [3276] LOG:  shutting down
+2021-03-25 15:29:47.567 EDT [3274] LOG:  database system is shut down
+2021-03-26 15:32:23.172 EDT [1958] LOG:  starting PostgreSQL 13.2 on x86_64-apple-darwin19.6.0, compiled by Apple clang version 11.0.3 (clang-1103.0.32.62), 64-bit
+2021-03-26 15:32:23.182 EDT [1958] LOG:  listening on IPv6 address "::1", port 5432
+2021-03-26 15:32:23.182 EDT [1958] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2021-03-26 15:32:23.183 EDT [1958] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2021-03-26 15:32:23.189 EDT [1959] LOG:  database system was shut down at 2021-03-25 15:29:47 EDT
+2021-03-26 15:32:23.200 EDT [1958] LOG:  database system is ready to accept connections
+2021-03-26 15:40:32.782 EDT [2083] FATAL:  database "Caled" does not exist

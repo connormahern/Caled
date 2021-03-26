@@ -10,7 +10,11 @@
         <h5 class="card-header mb-3">{{ c.name }}</h5>
         <h6 class="card-title">Instructor {{c.teacherId}}</h6>
         <p class="card-text">{{ c.enrolledId }}</p>
-        <a href="#" class="btn btn-primary" >See Course Main Page</a>
+
+        <form method = "post" action = "/">
+            <a href=coursePage > <button type = "submit" name = "courseReroute" value = c.id class="btn btn-primary"> See Course Main Page </button></a>
+        </form>
+    
         </div>
     </div>
     {% endfor %}
