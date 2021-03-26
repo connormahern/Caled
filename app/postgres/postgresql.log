@@ -79,3 +79,88 @@
 2021-03-26 15:48:54.533 EDT [2297] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
 2021-03-26 15:48:54.533 EDT [2297] STATEMENT:  
 	DROP TABLE "Instructor"
+2021-03-26 15:50:50.587 EDT [2320] ERROR:  cannot drop table "Instructor" because other objects depend on it
+2021-03-26 15:50:50.587 EDT [2320] DETAIL:  constraint Course_instructor_id_fkey on table "Course" depends on table "Instructor"
+2021-03-26 15:50:50.587 EDT [2320] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2021-03-26 15:50:50.587 EDT [2320] STATEMENT:  
+	DROP TABLE "Instructor"
+2021-03-26 15:59:18.296 EDT [2590] ERROR:  cannot drop table "Instructor" because other objects depend on it
+2021-03-26 15:59:18.296 EDT [2590] DETAIL:  constraint Course_instructor_id_fkey on table "Course" depends on table "Instructor"
+2021-03-26 15:59:18.296 EDT [2590] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2021-03-26 15:59:18.296 EDT [2590] STATEMENT:  
+	DROP TABLE "Instructor"
+2021-03-26 16:00:08.155 EDT [2596] ERROR:  cannot drop table "Instructor" because other objects depend on it
+2021-03-26 16:00:08.155 EDT [2596] DETAIL:  constraint Course_instructor_id_fkey on table "Course" depends on table "Instructor"
+2021-03-26 16:00:08.155 EDT [2596] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2021-03-26 16:00:08.155 EDT [2596] STATEMENT:  
+	DROP TABLE "Instructor"
+2021-03-26 16:06:10.416 EDT [2628] ERROR:  syntax error at or near "SHOW" at character 25
+2021-03-26 16:06:10.416 EDT [2628] STATEMENT:  DROP TABLE "Instructor"
+	SHOW TABLES
+	DROP TABLE "Instructor" CASCADE
+	DROP TABLE Instructor CASCADE
+	DROP TABLE [IF EXISTS]
+	Instructor
+	assignment
+	Course
+	File
+	Assignment
+	Message
+	Module
+	Student
+	User
+	alembic_versio
+	alembic_version
+	[CASCADE | RESTRICT];
+2021-03-26 16:06:48.505 EDT [2628] ERROR:  syntax error at or near "[" at character 12
+2021-03-26 16:06:48.505 EDT [2628] STATEMENT:  DROP TABLE [IF EXISTS]
+	Instructor
+	assignment
+	Course
+	File
+	Assignment
+	Message
+	Module
+	Student
+	User
+	alembic_versio
+	alembic_version
+	[CASCADE | RESTRICT];
+2021-03-26 16:07:47.866 EDT [2628] ERROR:  syntax error at or near "assignment" at character 33
+2021-03-26 16:07:47.866 EDT [2628] STATEMENT:  DROP TABLE IF EXISTS
+	Instructor
+	assignment
+	Course
+	File
+	Assignment
+	Message
+	Module
+	Student
+	User
+	alembic_versio
+	alembic_version
+	[CASCADE | RESTRICT];
+2021-03-26 16:08:46.808 EDT [2628] ERROR:  syntax error at or near "Course" at character 33
+2021-03-26 16:08:46.808 EDT [2628] STATEMENT:  DROP TABLE IF EXISTS
+	Instructor
+	Course
+	File
+	Assignment
+	Message
+	Module
+	Student
+	User
+	alembic_version
+	CASCADE | RESTRICT;
+2021-03-26 16:09:52.947 EDT [2628] ERROR:  table "instructor" does not exist
+2021-03-26 16:09:52.947 EDT [2628] STATEMENT:  DROP TABLE Instructor;
+2021-03-26 16:12:03.391 EDT [2628] ERROR:  table "instructor" does not exist
+2021-03-26 16:12:03.391 EDT [2628] STATEMENT:  DROP TABLE Instructor;
+2021-03-26 16:12:03.394 EDT [2628] ERROR:  syntax error at or near "[" at character 15
+2021-03-26 16:12:03.394 EDT [2628] STATEMENT:  DROP DATABASE [IF EXISTS] database_name;
+2021-03-26 16:12:22.148 EDT [2628] ERROR:  syntax error at or near "[" at character 15
+2021-03-26 16:12:22.148 EDT [2628] STATEMENT:  DROP DATABASE [IF EXISTS] Caled;
+2021-03-26 16:12:29.621 EDT [2628] ERROR:  cannot drop the currently open database
+2021-03-26 16:12:29.621 EDT [2628] STATEMENT:  DROP DATABASE IF EXISTS Caled;
+2021-03-26 16:12:39.374 EDT [2628] ERROR:  syntax error at or near "[" at character 15
+2021-03-26 16:12:39.374 EDT [2628] STATEMENT:  DROP DATABASE [IF EXISTS] Caled;

@@ -1,7 +1,7 @@
 
 from flask import Blueprint, render_template, redirect, url_for, request, flash, session, jsonify, Flask
 from flask_login import login_required, current_user
-from .models import Course, User
+from .models import User
 from flask_sqlalchemy import SQLAlchemy 
 from main import db
 
