@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "460ddc2fe9afaac5452028e4a0fee321808de51fdc6476ed94f4f9ac7f310e6a"
+            "sha256": "c34d114907de43ecb5d6f927aea4340cc5fcecdad75d09eb900f92c5192b601c"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -55,6 +55,14 @@
             ],
             "index": "pypi",
             "version": "==7.1.2"
+        },
+        "config": {
+            "hashes": [
+                "sha256:73ea4a8064facc61fcba736be71996aaa7f38a564166a284628b8e8c53444f2e",
+                "sha256:c7e48f9820758a4ddc23ae3bf10b118959f6fd06018be9eb0e1d9d5a3b227de1"
+            ],
+            "index": "pypi",
+            "version": "==0.5.0.post0"
         },
         "distlib": {
             "hashes": [
@@ -110,6 +118,13 @@
             ],
             "index": "pypi",
             "version": "==2.4.4"
+        },
+        "flasky": {
+            "hashes": [
+                "sha256:ff59da3cb30e90ede6ce00ed25205d5e83238186f15ac814595d13bd7fe4b383"
+            ],
+            "index": "pypi",
+            "version": "==0.1.0"
         },
         "greenlet": {
             "hashes": [

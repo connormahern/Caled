@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
-from instance.config import app_config
+from instance.config_defult import app_config
 from flask_migrate import Migrate
 import os
 import re
@@ -18,7 +18,6 @@ def create_app(config_name):
     app.config.from_object(app_config[config_name])
     app.config.from_pyfile('config.py', silent=True)
     app.config['SECRET_KEY'] = b'\xe0\xc3\x98\xdbH\xbd\x12E\xc4u\x84c\xfb\x1f\xa1h'
-    os.environ['DATABASE_URL'] = "postgres://yirwlcakkvzlkl:a74296c1f39e18cf08f12fdf4e52a395f9f207c9c1c5c6a9ba51d6a79ca2cda0@ec2-35-168-198-9.compute-1.amazonaws.com:5432/d1ppu0r0g0loa1"
     uri = os.getenv("DATABASE_URL")
     if uri.startswith("postgres://"):
         uri = uri.replace("postgres://", "postgresql://", 1)
@@ -33,9 +32,11 @@ def create_app(config_name):
     
     from .models import User
 
-    # @app.before_first_request
-    # def create_tables():
-    #     db.create_all()
+    @app.before_first_request
+    def create_tables():
+          db.create_all()
+
+    migrate = Migrate(app, db)
     
     @login_manager.user_loader
     def load_user(user_id):

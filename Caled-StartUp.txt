@@ -9,3 +9,5 @@
 5. export FLASK_CONGFIG=development"
 
 6. flask run
+
+export APP_SETTINGS="instance.config_defult.DevelopmentConfig"

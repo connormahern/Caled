@@ -41,6 +41,8 @@ Mako = "==1.1.4"
 MarkupSafe = "==1.1.1"
 Werkzeug = "==1.0.1"
 psycopg2 = "*"
+config = "*"
+flasky = "*"
 
 [dev-packages]
 

@@ -164,3 +164,79 @@
 2021-03-26 16:12:29.621 EDT [2628] STATEMENT:  DROP DATABASE IF EXISTS Caled;
 2021-03-26 16:12:39.374 EDT [2628] ERROR:  syntax error at or near "[" at character 15
 2021-03-26 16:12:39.374 EDT [2628] STATEMENT:  DROP DATABASE [IF EXISTS] Caled;
+2021-03-28 17:10:32.573 EDT [11884] ERROR:  cannot drop table "Module" because other objects depend on it
+2021-03-28 17:10:32.573 EDT [11884] DETAIL:  constraint Assignment_module_id_fkey on table "Assignment" depends on table "Module"
+2021-03-28 17:10:32.573 EDT [11884] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2021-03-28 17:10:32.573 EDT [11884] STATEMENT:  
+	DROP TABLE "Module"
+2021-03-28 17:11:30.254 EDT [11894] ERROR:  cannot drop table "Module" because other objects depend on it
+2021-03-28 17:11:30.254 EDT [11894] DETAIL:  constraint Assignment_module_id_fkey on table "Assignment" depends on table "Module"
+2021-03-28 17:11:30.254 EDT [11894] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2021-03-28 17:11:30.254 EDT [11894] STATEMENT:  
+	DROP TABLE "Module"
+2021-03-28 17:12:20.817 EDT [11917] ERROR:  table "Modeule" does not exist
+2021-03-28 17:12:20.817 EDT [11917] STATEMENT:  DROP TABLE "Modeule";
+2021-03-28 17:12:26.882 EDT [11917] ERROR:  table "Module" does not exist
+2021-03-28 17:12:26.882 EDT [11917] STATEMENT:  DROP TABLE "Module";
+2021-03-28 17:13:02.046 EDT [11949] ERROR:  cannot drop table "Module" because other objects depend on it
+2021-03-28 17:13:02.046 EDT [11949] DETAIL:  constraint Assignment_module_id_fkey on table "Assignment" depends on table "Module"
+2021-03-28 17:13:02.046 EDT [11949] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2021-03-28 17:13:02.046 EDT [11949] STATEMENT:  
+	DROP TABLE "Module"
+2021-03-28 17:24:48.700 EDT [12070] ERROR:  cannot drop table "Module" because other objects depend on it
+2021-03-28 17:24:48.700 EDT [12070] DETAIL:  constraint Assignment_module_id_fkey on table "Assignment" depends on table "Module"
+2021-03-28 17:24:48.700 EDT [12070] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2021-03-28 17:24:48.700 EDT [12070] STATEMENT:  
+	DROP TABLE "Module"
+2021-03-28 17:26:31.172 EDT [12072] ERROR:  syntax error at or near "[" at character 12
+2021-03-28 17:26:31.172 EDT [12072] STATEMENT:  DROP TABLE [ IF EXISTS ] "Module" [ CASCADE | RESTRICT ];
+2021-03-28 17:26:48.032 EDT [12072] ERROR:  syntax error at or near "|" at character 29
+2021-03-28 17:26:48.032 EDT [12072] STATEMENT:  DROP TABLE "Module" CASCADE | RESTRICT;
+2021-03-28 17:27:00.842 EDT [12072] ERROR:  syntax error at or near "[" at character 21
+2021-03-28 17:27:00.842 EDT [12072] STATEMENT:  DROP TABLE "Module" [CASCADE];
+2021-03-28 17:27:05.629 EDT [12072] ERROR:  table "Module" does not exist
+2021-03-28 17:27:05.629 EDT [12072] STATEMENT:  DROP TABLE "Module" CASCADE;
+2021-03-28 17:27:12.843 EDT [12072] ERROR:  table "module" does not exist
+2021-03-28 17:27:12.843 EDT [12072] STATEMENT:  DROP TABLE Module CASCADE;
+2021-03-28 17:28:16.541 EDT [12139] ERROR:  cannot drop table "Course" because other objects depend on it
+2021-03-28 17:28:16.541 EDT [12139] DETAIL:  constraint Module_course_id_fkey on table "Module" depends on table "Course"
+2021-03-28 17:28:16.541 EDT [12139] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2021-03-28 17:28:16.541 EDT [12139] STATEMENT:  
+	DROP TABLE "Course"
+2021-03-28 17:50:01.515 EDT [12687] ERROR:  relation "alembic_version" does not exist at character 13
+2021-03-28 17:50:01.515 EDT [12687] STATEMENT:  delete from alembic_version;
+2021-03-28 17:53:47.066 EDT [12838] ERROR:  table "alembic_version" does not exist
+2021-03-28 17:53:47.066 EDT [12838] STATEMENT:  DROP TABLE alembic_version;
+2021-03-28 17:54:11.418 EDT [12838] ERROR:  database "caled" already exists
+2021-03-28 17:54:11.418 EDT [12838] STATEMENT:  create database caled;
+2021-03-28 17:56:08.561 EDT [12900] ERROR:  cannot drop table "Assignment" because other objects depend on it
+2021-03-28 17:56:08.561 EDT [12900] DETAIL:  constraint File_Assignment_id_fkey on table "File" depends on table "Assignment"
+2021-03-28 17:56:08.561 EDT [12900] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2021-03-28 17:56:08.561 EDT [12900] STATEMENT:  
+	DROP TABLE "Assignment"
+2021-03-28 17:58:05.329 EDT [12904] ERROR:  table "assignment" does not exist
+2021-03-28 17:58:05.329 EDT [12904] STATEMENT:  DROP TABLE Assignment CASCADE
+	;
+2021-03-28 17:58:40.440 EDT [12943] ERROR:  table "Assignment" does not exist
+2021-03-28 17:58:40.440 EDT [12943] STATEMENT:  
+	DROP TABLE "Assignment"
+2021-03-28 17:59:28.823 EDT [12980] ERROR:  cannot drop table "Course" because other objects depend on it
+2021-03-28 17:59:28.823 EDT [12980] DETAIL:  constraint Module_course_id_fkey on table "Module" depends on table "Course"
+2021-03-28 17:59:28.823 EDT [12980] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2021-03-28 17:59:28.823 EDT [12980] STATEMENT:  
+	DROP TABLE "Course"
+2021-03-28 18:05:18.146 EDT [13151] ERROR:  syntax error at or near "-" at character 22
+2021-03-28 18:05:18.146 EDT [13151] STATEMENT:  create database caled-live
+	;
+2021-03-28 18:14:28.120 EDT [13543] ERROR:  table "a" does not exist
+2021-03-28 18:14:28.120 EDT [13543] STATEMENT:  drop table a;
+2021-03-28 18:14:38.723 EDT [13543] ERROR:  syntax error at or near "embic_version" at character 1
+2021-03-28 18:14:38.723 EDT [13543] STATEMENT:  embic_version
+	drop table alembic_version
+	;
+2021-03-28 18:18:32.895 EDT [13689] ERROR:  table "alembic_version" does not exist
+2021-03-28 18:18:32.895 EDT [13689] STATEMENT:  DROP TABLE alembic_version;
+2021-03-28 18:37:27.138 EDT [14626] ERROR:  table "alembic_version" does not exist
+2021-03-28 18:37:27.138 EDT [14626] STATEMENT:  DROP TABLE alembic_version;
+2021-03-28 18:38:16.779 EDT [14678] ERROR:  table "alembic_version" does not exist
+2021-03-28 18:38:16.779 EDT [14678] STATEMENT:  DROP TABLE alembic_version;
