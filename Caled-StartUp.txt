@@ -1,0 +1,11 @@
+1. Start postgres sever called Caled
+
+2. navigate into Caled folder
+
+3. source venv/bin/activate
+
+4. export FLASK_APP=run.py
+
+5. export FLASK_CONGFIG=development"
+
+6. flask run
