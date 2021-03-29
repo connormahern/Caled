@@ -240,3 +240,8 @@
 2021-03-28 18:37:27.138 EDT [14626] STATEMENT:  DROP TABLE alembic_version;
 2021-03-28 18:38:16.779 EDT [14678] ERROR:  table "alembic_version" does not exist
 2021-03-28 18:38:16.779 EDT [14678] STATEMENT:  DROP TABLE alembic_version;
+2021-03-28 19:31:30.587 EDT [1958] LOG:  received fast shutdown request
+2021-03-28 19:31:30.588 EDT [1958] LOG:  aborting any active transactions
+2021-03-28 19:31:30.595 EDT [1958] LOG:  background worker "logical replication launcher" (PID 1965) exited with exit code 1
+2021-03-28 19:31:30.595 EDT [1960] LOG:  shutting down
+2021-03-28 19:31:30.606 EDT [1958] LOG:  database system is shut down
