@@ -19,8 +19,7 @@ def create_app(config_name):
     app.config.from_pyfile('config.py', silent=True)
     app.config['SECRET_KEY'] = b'\xe0\xc3\x98\xdbH\xbd\x12E\xc4u\x84c\xfb\x1f\xa1h'
     uri = os.getenv("DATABASE_URL")
-    if uri.startswith("postgres://"):
-        uri = uri.replace("postgres://", "postgresql://", 1)
+    uri = uri.replace("postgres://", "postgresql://", 1)
     os.environ['DATABASE_URL'] = uri
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
     db.init_app(app)
