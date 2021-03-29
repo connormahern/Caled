@@ -8,9 +8,8 @@ from main.__init__ import db, app
 
 app.config.from_object(os.environ['APP_SETTINGS'])
 
-uri = os.getenv("DATABASE_URL")  # or other relevant config var
-if uri.startswith("postgres://"):
-    uri = uri.replace("postgres://", "postgresql://", 1)
+uri = "postgresql:///caledlive"  # or other relevant config var
+
 os.environ['DATABASE_URL'] = uri
 
 migrate = Migrate(app, db)
