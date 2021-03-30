@@ -113,7 +113,7 @@
                     {% if not m.isRead and email in m.recipient %}
                     <div class="media text-muted pt-3 my-3 p-3 bg-white rounded box-shadow">
                         <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                            <strong class="d-block text-gray-dark"> Sent From : {{m.name}} {{m.recipientId}} <p style="text-align: right; padding: 10px;">  {{m.date}} </p> </strong>
+                            <strong class="d-block text-gray-dark"> Sent From : {{m.name}} <p style="text-align: right; padding: 10px;">  {{m.date}} </p> </strong>
                             {{m.messageText}}
                         </p>
                         <form>
