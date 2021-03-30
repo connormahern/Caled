@@ -1,5 +1,6 @@
 from flask_login import UserMixin
 from main import db
+import datetime
 
 
 class User(UserMixin, db.Model):
@@ -21,6 +22,23 @@ class User(UserMixin, db.Model):
     
     def __repr__(self):
         return f"User('{self.name}','{self.email}', '{self.hasAccess}')"
+
+class Message(UserMixin, db.Model):
+
+    __tablename__ = 'Message'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    message = db.Column(db.String(100), nullable=False) #actual message
+    #sender = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False) #foreign key from user to link to message table
+    senderId = db.Column(db.Integer, db.ForeignKey('User.id', ondelete='cascade'))
+    sender = db.relationship('User', foreign_keys=senderId)
+    recipientId = db.Column(db.Integer, db.ForeignKey('User.id', ondelete='set null'))
+    recipient =  db.relationship('User', foreign_keys=recipientId)
+    dateTime = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow) #time message was received 
+    isRead = db.Column(db.Boolean, default=False) #indicates if a message has been read
+
+    def __repr__(self):
+        return f"Message('{self.message}', '{self.dateTime}', '{self.isRead}')"
 
 
 """ class Admin(UserMixin, db.Model):

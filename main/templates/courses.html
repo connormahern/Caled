@@ -11,8 +11,8 @@
         <h6 class="card-title">Instructor {{c.teacherId}}</h6>
         <p class="card-text">{{ c.enrolledId }}</p>
 
-        <form method = "post" action = "/">
-            <a href=coursePage > <button type = "submit" name = "courseReroute" value = c.id class="btn btn-primary"> See Course Main Page </button></a>
+        <form method = "post" action = "/courses">
+            <a href=coursePage > <button type = "submit" name = "courseReroute" value = c.id class="btn btn-primary" input=c.id> See Course Main Page </button></a>
         </form>
     
         </div>

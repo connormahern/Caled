@@ -245,3 +245,21 @@
 2021-03-28 19:31:30.595 EDT [1958] LOG:  background worker "logical replication launcher" (PID 1965) exited with exit code 1
 2021-03-28 19:31:30.595 EDT [1960] LOG:  shutting down
 2021-03-28 19:31:30.606 EDT [1958] LOG:  database system is shut down
+2021-03-29 15:04:00.789 EDT [21622] LOG:  starting PostgreSQL 13.2 on x86_64-apple-darwin19.6.0, compiled by Apple clang version 11.0.3 (clang-1103.0.32.62), 64-bit
+2021-03-29 15:04:00.792 EDT [21622] LOG:  listening on IPv6 address "::1", port 5432
+2021-03-29 15:04:00.792 EDT [21622] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2021-03-29 15:04:00.793 EDT [21622] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2021-03-29 15:04:00.800 EDT [21623] LOG:  database system was shut down at 2021-03-28 19:31:30 EDT
+2021-03-29 15:04:00.812 EDT [21622] LOG:  database system is ready to accept connections
+2021-03-29 15:49:23.982 EDT [22746] FATAL:  database "User" does not exist
+2021-03-29 16:55:15.631 EDT [21622] LOG:  received fast shutdown request
+2021-03-29 16:55:15.631 EDT [21622] LOG:  aborting any active transactions
+2021-03-29 16:55:15.635 EDT [21622] LOG:  background worker "logical replication launcher" (PID 21629) exited with exit code 1
+2021-03-29 16:55:15.636 EDT [21624] LOG:  shutting down
+2021-03-29 16:55:15.644 EDT [21622] LOG:  database system is shut down
+2021-03-29 19:09:41.374 EDT [26148] LOG:  starting PostgreSQL 13.2 on x86_64-apple-darwin19.6.0, compiled by Apple clang version 11.0.3 (clang-1103.0.32.62), 64-bit
+2021-03-29 19:09:41.377 EDT [26148] LOG:  listening on IPv6 address "::1", port 5432
+2021-03-29 19:09:41.377 EDT [26148] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2021-03-29 19:09:41.377 EDT [26148] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2021-03-29 19:09:41.388 EDT [26149] LOG:  database system was shut down at 2021-03-29 16:55:15 EDT
+2021-03-29 19:09:41.403 EDT [26148] LOG:  database system is ready to accept connections
