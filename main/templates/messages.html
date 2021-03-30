@@ -50,7 +50,6 @@
         -ms-flex-wrap: nowrap;
         flex-wrap: nowrap;
         padding-bottom: 1rem;
-        margin-top: -1px;
         overflow-x: auto;
         color: rgba(255, 255, 255, .75);
         text-align: center;
@@ -91,20 +90,39 @@
 {% block content %}
 {% include 'nav.html' %}
 <body class="bg-light">
+
+    <div>
+        <a href=sendMessage>
+            <button type="button" class="btn btn-primary" style="margin-top: 10px; margin-bottom: 5px; margin-right: 100px; position:absolute; right: 0;" > Send Message </button>
+        </a>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <h3 class="one" style="visibility:collapse; ">Text</h3>
+            
+        </div>
+    </div>
+    
     <main role="main" class="container">
-        <div class="my-3 p-3 bg-white rounded box-shadow">
-            <h6 class="border-bottom border-gray pb-2 mb-0">Unread Messages</h6>
+        
+        
+        <div class="my-3 p-3 bg-light rounded box-shadow">
+            <h6 class="border-bottom border-gray pb-2 mb-0"> Messages</h6>
                 {% for m in message %}
                     {% if not m.isRead and email in m.recipient %}
                     <div class="media text-muted pt-3 my-3 p-3 bg-white rounded box-shadow">
                         <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                            <strong class="d-block text-gray-dark"> {{m.name}} <p style="text-align: right; padding: 10px;">  {{m.date}} </p> </strong>
+                            <strong class="d-block text-gray-dark"> Sent From : {{m.name}} {{m.recipientId}} <p style="text-align: right; padding: 10px;">  {{m.date}} </p> </strong>
                             {{m.messageText}}
                         </p>
+                        <form>
+                            <a href=sendMessage>
+                                <button type="button" class="btn btn-primary float-right"> Reply </button>
+                            </a>
+                        </form>
+
                     </div>
-                    <form>
-                        <button type="button" class="btn btn-primary float-right" > Reply </button>
-                    </form>
                     {% endif %}
                 {% endfor %}
 
@@ -113,35 +131,14 @@
     </main>
 
     <main role="main" class="container">
-        <div class="my-3 p-3 bg-white rounded box-shadow">
-            <h6 class="border-bottom border-gray pb-2 mb-0"> Read Messages</h6>
-                {% for m in message %}
-                    {% if m.isRead and email in m.recipient %}
-                    <div class="media text-muted pt-3 my-3 p-3 bg-white rounded box-shadow">
-                        <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                            <strong class="d-block text-gray-dark"> {{m.name}} <p style="text-align: right; padding: 10px;">  {{m.date}} </p> </strong>
-                            {{m.messageText}}
-                        </p>
-                    </div>
-
-                    <form>
-                        <button type="button" class="btn btn-primary float-right" > Reply </button>
-                    </form>
-
-                    {% endif %}
-                {% endfor %}
-        </div>
-    </main>
-
-    <main role="main" class="container">
-        <div class="my-3 p-3 bg-white rounded box-shadow">
+        <div class="my-3 p-3 bg-light rounded box-shadow">
             <h6 class="border-bottom border-gray pb-2 mb-0"> Sent Messages</h6>
-                {% for m in message %}
-                    {% if m.isRead and email == m.sender %}
+                {% for s in sent %}
+                    {% if email == s.sender %}
                     <div class="media text-muted pt-3 my-3 p-3 bg-white rounded box-shadow">
                         <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                            <strong class="d-block text-gray-dark"> Sent To : {{m.recipient}} <p style="text-align: right; padding: 10px;">  {{m.date}} </p> </strong>
-                            {{m.messageText}}
+                            <strong class="d-block text-gray-dark"> Sent To : {{s.name}} <p style="text-align: right; padding: 10px;">  {{s.date}} </p> </strong>
+                            {{s.messageText}}
                         </p>
                     </div>
                     {% endif %}

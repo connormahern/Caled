@@ -1,12 +1,17 @@
 
-from flask import Blueprint, render_template, redirect, url_for, request, flash, session, jsonify, Flask
+from flask import Blueprint, render_template, redirect, url_for, request, flash, session, jsonify, Flask, current_app, g
 from flask_login import login_required, current_user
-from .models import User
+from flask_login.utils import login_fresh
+from .models import User, Message
 from flask_sqlalchemy import SQLAlchemy 
-from main import db
+from sqlalchemy.sql import text
+from .__init__ import app, db
 
 #engine = create_engine('sqlite:///db.sqlite')
 views = Blueprint('views', __name__)
+
+
+
 
 
 #This can be a sample for of data that is in class course, we could query a table where user.id in enrolledID
@@ -48,33 +53,47 @@ course = [
 ]
 # Adding Course Events to DB
 
+
 @views.route('/')
 def index():
     return render_template('index.html')
+
+@views.route('/database')
+def userData():
+
+    query = User.query.filter(User.email == session['email']).first()
+    data = { 'id' : query.id, 'name' : query.name, 'email' : query.email}
+    
+    return render_template('database.html', data=data)
+
+
 
 @views.route('/profile')
 @login_required
 def profile():
 
-    currentUser  = { 'id' : '10001', 'name' : current_user.name, 'email' : session['email'], 'password' : '********', 'userType' : 'Student'}
+    query = User.query.filter(User.email == session['email']).first()
+    currentUser = { 'id' : query.id, 'name' : query.name, 'email' : query.email, 'userType' : query.userType}
 
     return render_template('profile.html', current=currentUser)
 
-rerouteName = None
 @views.route('/courses')
 @login_required
-def courses():
-    """ if request.method == 'POST' :
-        rerouteName = request.form.get('courseReroute')
-    else : """
-    
+def courses(): 
     return render_template('courses.html', course=course)
+
+
+rerouteName = None
+@views.route('/courses', methods=['GET', 'POST'])
+@login_required
+def courses_post():
+    
+    rerouteName = request.form.get('courseReroute')
+    return redirect(url_for('views.coursePage'))
 
 @views.route('/coursePage')
 @login_required
 def coursePage():
-    
-
 
     return render_template('coursePage.html', rerouteName=rerouteName)
 
@@ -87,72 +106,75 @@ def MainP():
 @views.route('/messages')
 @login_required
 def messages():
-    message = [ 
-            {
-                'id' : 20000,
-                'name' : "Connor Mahern",
-                'sender' : 'cjmahern@iu.edu',
-                'recipient' : ['ctaddeuc@iu.edu'],
-                'messageText' : 'Group Project! Soon! lets work',
-                'date' : "03-23-2021 11:51 pm",
-                'isRead' : False
-
-            },
-            {
-                'id' : 20001,
-                'name' : "Chris Taddeucci",
-                'sender' : 'ctaddeuc@iu.edu',
-                'recipient' : ['cjmahern@iu.edu'],
-                'messageText' : 'for sure man',
-                'date' : "03-23-2021 11:51 pm",
-                'isRead' : True
-
-            },
-           {
-                'id' : 20002,
-                'name' : "Chris Taddeucci",
-                'sender' : 'teacher@iu.edu',
-                'recipient' : ['ctaddeuc@iu.edu'],
-                'messageText' : "YOU HAVE BAD GRADE",
-                'date' : "03-23-2021 11:51 pm",
-                'isRead' : True
-            },
-            {
-                'id' : 20003,
-                'name' : "Connor Mahern",
-                'sender' : 'cjmahern@iu.edu',
-                'recipient' : ['ctaddeuc@iu.edu', 'teacher@iu.edu'],
-                'messageText' : "The Instructor changed the deadline",
-                'date' : "03-23-2021 11:51 pm",
-                'isRead' : False
-            },
-            {
-
-                'id' : 20004,
-                'name' : "Teacher 1",
-                'sender' : 'teacher@iu.edu',
-                'recipient' : ['ctaddeuc@iu.edu', 'cjmahern@iu.edu'],
-                'messageText' : "Thank you!",
-                'date' : "03-23-2021 11:51 pm",
-                'isRead' : True
-
-            },
-            {
-
-                'id' : 20005,
-                'name' : "Teacher 1",
-                'sender' : 'teacher@iu.edu',
-                'recipient' : ['ctaddeuc@iu.edu', 'cjmahern@iu.edu'],
-                'messageText' : "Thanks for letting me know",
-                'date' : "03-23-2021 11:51 pm",
-                'isRead' : False
-
-            }
-        ]
+    
     email = session['email']
+    currentQuery = User.query.filter(User.email == session['email']).first()
+    currentName = currentQuery.name
+    currentId = currentQuery.id
+    currentEmail = currentQuery.email
+    messageQuery = Message.query.filter(Message.recipientId == currentId).all()
+    sentQuery = Message.query.filter(Message.senderId == currentId).all()
 
 
-    return render_template('messages.html', message=message, email=email)
+    if messageQuery is not None : 
+        messageList = []
+        for i in messageQuery :
+            newMessage = {'id' : i.id, 'messageText' : i.message ,'senderId'  : i.senderId, 'recipientId': i.recipientId, 'date' : " ", 'isRead': i.isRead }
+            
+            senderQuery = User.query.filter(User.id == i.senderId).first()
+            senderName = senderQuery.name
+            senderEmail = senderQuery.email
+            newMessage['name'] = senderName
+            newMessage['recipient'] = currentEmail
+            newMessage['sender'] = senderEmail
+            messageList.append(newMessage)
+        
+        sentList = []
+        for i in sentQuery :
+            newMessage = {'id' : i.id, 'messageText' : i.message ,'senderId'  : i.senderId, 'recipientId': i.recipientId, 'date' : "  ", 'isRead': i.isRead }
+            
+            recipientQuery = User.query.filter(User.id == i.recipientId).first()
+            recipientName = recipientQuery.name
+            recipientEmail = recipientQuery.email
+            newMessage['name'] = recipientName
+            newMessage['recipient'] = recipientEmail
+            newMessage['sender'] = currentEmail
+            sentList.append(newMessage)
+    
+
+
+        return render_template('messages.html', message=messageList, sent=sentList, email=email, currentName=currentName)
+    else :
+        return render_template('messagesNone.html')
+
+@views.route('/sendMessage')
+@login_required
+def sendMessage() :
+    return render_template("sendMessage.html")
+
+@views.route('/sendMessage', methods=['POST'])
+def message_post():
+
+    query = User.query.filter(User.email == session['email']).first()
+    currentUser = { 'id' : query.id, 'name' : query.name, 'email' : query.email, 'userType' : query.userType}
+
+    newMessage = request.form.get('message')
+    senderId = query.id
+
+    recipientEmail = request.form.get('email')
+    try :
+        recipientQuery = User.query.filter(User.email == recipientEmail).first()
+        recipientId = recipientQuery.id
+    
+        new_message = Message(message=newMessage, senderId=senderId, recipientId=recipientId)
+        db.session.add(new_message)
+        db.session.commit()
+    except :
+        flash('No User in Organization with this Email Adress! Please try again!')
+        return redirect(url_for('views.sendMessage'))
+
+
+    return redirect(url_for('views.messages'))
 
 @views.route('/calendar-events')
 @login_required

@@ -44,7 +44,7 @@
         .form-signin .checkbox {
             font-weight: 400;
         }
-        .form-signin .form-control {
+        .form-signin .form-control .form-group{
             position: relative;
             box-sizing: border-box;
             height: auto;
@@ -62,7 +62,7 @@
             border-bottom-right-radius: 0;
         }
         .form-signin input[type="name"] {
-            margin-bottom: 0px;
+            margin-bottom: -1px;
             border-top-left-radius: 0;
             border-top-right-radius: 0;
             border-bottom-left-radius: 0;
@@ -72,6 +72,16 @@
             margin-bottom: -1px;
             border-top-left-radius: 0;
             border-top-right-radius: 0;
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+        .form-signin select[type="userType"] {
+            color: lightslategray;
+            margin-bottom: -1px;
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+            border-bottom-left-radius: 1;
+            border-bottom-right-radius: 1;
         }
     </style>
 </head>
@@ -89,7 +99,7 @@
 
             {% with messages = get_flashed_messages() %}
             {% if messages %}
-                <div class="notification is-danger">
+                <div class="alert alert-danger">
                     {{ messages[0] }}. Go to <a href="{{ url_for('auth.login') }}">login page</a>.
                 </div>
             {% endif %}
@@ -98,13 +108,23 @@
     
             <input type="email" name="email" id="inputEmail" class="form-control bg-light" placeholder="Email address" required autofocus>
             <input type="name" name="name" id="inputName" class="form-control bg-light" placeholder="Name" required autofocus>
-            <input type="password" name="password" id="inputPassword" class="form-control bg-light" placeholder="Password" required>
+            <input type="password" name="password" id="inputPassword" class="form-control bg-light" placeholder="Password" required autofocus>
+
+            <div class="form-group"  placeholder="Select Type" id="sel1" name="userSelect" type="userType">
+                <select class="form-control bg-light" name="userType" type="userType" required autofocus>
+                  <option selected> Select Type</option>
+                  <option>Student</option>
+                  <option>Instructor</option>
+                  <option>Admin</option>
+                </select>
+            </div>
+
             <div class="checkbox mb-3">
                 <label>
                     <input type="checkbox" value="remember-me" > Remember me
                 </label>
             </div>
-            <button class="btn btn-lg btn-light btn-block" type="submit" style="color: grey;">Log in</button>
+            <button class="btn btn-lg btn-light btn-block" type="submit" style="color: grey;">Sign Up</button>
         </form>
 </body>
 
