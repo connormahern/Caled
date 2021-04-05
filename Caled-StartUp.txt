@@ -6,7 +6,9 @@
 
 4. export FLASK_APP=run.py
 
-5. export FLASK_CONGFIG=development"
+5. export FLASK_CONFIG="development"
+
+6. export DATABASE_URL="postgres:///caledlive"
 
 6. flask run
 

@@ -263,3 +263,75 @@
 2021-03-29 19:09:41.377 EDT [26148] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
 2021-03-29 19:09:41.388 EDT [26149] LOG:  database system was shut down at 2021-03-29 16:55:15 EDT
 2021-03-29 19:09:41.403 EDT [26148] LOG:  database system is ready to accept connections
+2021-04-04 20:57:06.431 EDT [1724] LOG:  starting PostgreSQL 13.2 on x86_64-apple-darwin19.6.0, compiled by Apple clang version 11.0.3 (clang-1103.0.32.62), 64-bit
+2021-04-04 20:57:06.434 EDT [1724] LOG:  listening on IPv6 address "::1", port 5432
+2021-04-04 20:57:06.434 EDT [1724] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2021-04-04 20:57:06.435 EDT [1724] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2021-04-04 20:57:06.446 EDT [1725] LOG:  database system was interrupted; last known up at 2021-03-30 00:29:42 EDT
+2021-04-04 20:57:06.495 EDT [1725] LOG:  database system was not properly shut down; automatic recovery in progress
+2021-04-04 20:57:06.496 EDT [1725] FATAL:  could not open directory "pg_stat": No such file or directory
+2021-04-04 20:57:06.497 EDT [1724] LOG:  startup process (PID 1725) exited with exit code 1
+2021-04-04 20:57:06.497 EDT [1724] LOG:  aborting startup due to startup process failure
+2021-04-04 20:57:06.497 EDT [1724] LOG:  database system is shut down
+2021-04-04 20:57:14.391 EDT [1731] LOG:  starting PostgreSQL 13.2 on x86_64-apple-darwin19.6.0, compiled by Apple clang version 11.0.3 (clang-1103.0.32.62), 64-bit
+2021-04-04 20:57:14.394 EDT [1731] LOG:  listening on IPv6 address "::1", port 5432
+2021-04-04 20:57:14.394 EDT [1731] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2021-04-04 20:57:14.394 EDT [1731] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2021-04-04 20:57:14.398 EDT [1732] LOG:  database system was interrupted while in recovery at 2021-04-04 20:57:06 EDT
+2021-04-04 20:57:14.398 EDT [1732] HINT:  This probably means that some data is corrupted and you will have to use the last backup for recovery.
+2021-04-04 20:57:14.442 EDT [1732] LOG:  database system was not properly shut down; automatic recovery in progress
+2021-04-04 20:57:14.443 EDT [1732] FATAL:  could not open directory "pg_stat": No such file or directory
+2021-04-04 20:57:14.443 EDT [1731] LOG:  startup process (PID 1732) exited with exit code 1
+2021-04-04 20:57:14.443 EDT [1731] LOG:  aborting startup due to startup process failure
+2021-04-04 20:57:14.444 EDT [1731] LOG:  database system is shut down
+2021-04-04 20:58:17.719 EDT [1747] LOG:  starting PostgreSQL 13.2 on x86_64-apple-darwin19.6.0, compiled by Apple clang version 11.0.3 (clang-1103.0.32.62), 64-bit
+2021-04-04 20:58:17.722 EDT [1747] LOG:  listening on IPv6 address "::1", port 5432
+2021-04-04 20:58:17.722 EDT [1747] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2021-04-04 20:58:17.722 EDT [1747] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2021-04-04 20:58:17.727 EDT [1748] LOG:  database system was interrupted while in recovery at 2021-04-04 20:57:14 EDT
+2021-04-04 20:58:17.727 EDT [1748] HINT:  This probably means that some data is corrupted and you will have to use the last backup for recovery.
+2021-04-04 20:58:17.771 EDT [1748] LOG:  database system was not properly shut down; automatic recovery in progress
+2021-04-04 20:58:17.772 EDT [1748] FATAL:  could not open directory "pg_stat": No such file or directory
+2021-04-04 20:58:17.772 EDT [1747] LOG:  startup process (PID 1748) exited with exit code 1
+2021-04-04 20:58:17.772 EDT [1747] LOG:  aborting startup due to startup process failure
+2021-04-04 20:58:17.773 EDT [1747] LOG:  database system is shut down
+2021-04-04 21:07:17.743 EDT [1916] LOG:  starting PostgreSQL 13.2 on x86_64-apple-darwin19.6.0, compiled by Apple clang version 11.0.3 (clang-1103.0.32.62), 64-bit
+2021-04-04 21:07:17.746 EDT [1916] LOG:  listening on IPv6 address "::1", port 5432
+2021-04-04 21:07:17.746 EDT [1916] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2021-04-04 21:07:17.746 EDT [1916] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2021-04-04 21:07:17.751 EDT [1917] LOG:  database system was interrupted while in recovery at 2021-04-04 20:58:17 EDT
+2021-04-04 21:07:17.751 EDT [1917] HINT:  This probably means that some data is corrupted and you will have to use the last backup for recovery.
+2021-04-04 21:07:17.793 EDT [1917] LOG:  database system was not properly shut down; automatic recovery in progress
+2021-04-04 21:07:17.793 EDT [1917] FATAL:  could not open directory "pg_stat": No such file or directory
+2021-04-04 21:07:17.794 EDT [1916] LOG:  startup process (PID 1917) exited with exit code 1
+2021-04-04 21:07:17.794 EDT [1916] LOG:  aborting startup due to startup process failure
+2021-04-04 21:07:17.795 EDT [1916] LOG:  database system is shut down
+2021-04-04 21:12:30.764 EDT [2027] LOG:  starting PostgreSQL 13.2 on x86_64-apple-darwin19.6.0, compiled by Apple clang version 11.0.3 (clang-1103.0.32.62), 64-bit
+2021-04-04 21:12:30.766 EDT [2027] LOG:  listening on IPv6 address "::1", port 5432
+2021-04-04 21:12:30.766 EDT [2027] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2021-04-04 21:12:30.767 EDT [2027] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2021-04-04 21:12:30.771 EDT [2028] LOG:  database system was interrupted while in recovery at 2021-04-04 21:07:17 EDT
+2021-04-04 21:12:30.771 EDT [2028] HINT:  This probably means that some data is corrupted and you will have to use the last backup for recovery.
+2021-04-04 21:12:30.813 EDT [2028] LOG:  database system was not properly shut down; automatic recovery in progress
+2021-04-04 21:12:30.815 EDT [2028] LOG:  redo starts at 0/1886F20
+2021-04-04 21:12:30.815 EDT [2028] LOG:  invalid record length at 0/1887008: wanted 24, got 0
+2021-04-04 21:12:30.815 EDT [2028] LOG:  redo done at 0/1886FD0
+2021-04-04 21:12:30.825 EDT [2027] LOG:  database system is ready to accept connections
+2021-04-04 21:15:06.710 EDT [2159] FATAL:  database "caled-live" does not exist
+2021-04-04 21:15:06.719 EDT [2160] FATAL:  database "caled-live" does not exist
+2021-04-04 21:15:06.743 EDT [2162] FATAL:  database "caled-live" does not exist
+2021-04-04 21:15:06.755 EDT [2163] FATAL:  database "caled-live" does not exist
+2021-04-04 21:15:06.764 EDT [2164] FATAL:  database "caled-live" does not exist
+2021-04-04 22:07:59.443 EDT [3716] ERROR:  cannot drop table "Instructor" because other objects depend on it
+2021-04-04 22:07:59.443 EDT [3716] DETAIL:  constraint Course_instructorId_fkey on table "Course" depends on table "Instructor"
+2021-04-04 22:07:59.443 EDT [3716] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2021-04-04 22:07:59.443 EDT [3716] STATEMENT:  
+	DROP TABLE "Instructor"
+2021-04-04 23:02:07.449 EDT [5666] ERROR:  cannot drop table "User" because other objects depend on it
+2021-04-04 23:02:07.449 EDT [5666] DETAIL:  constraint Admin_id_fkey on table "Admin" depends on table "User"
+	constraint Instructor_id_fkey on table "Instructor" depends on table "User"
+2021-04-04 23:02:07.449 EDT [5666] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2021-04-04 23:02:07.449 EDT [5666] STATEMENT:  
+	DROP TABLE "User"
+2021-04-04 23:07:51.997 EDT [5819] ERROR:  relation "course" does not exist at character 15
+2021-04-04 23:07:51.997 EDT [5819] STATEMENT:  select * from Course;

@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, redirect, url_for, request, flash, session, Flask
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, logout_user, login_required
-from .models import User
+from .models import User, Admin, Instructor, Student
 from .__init__ import db
 
 auth = Blueprint('auth', __name__)
@@ -44,12 +44,21 @@ def signup_post():
 
     user = User.query.filter_by(email=email).first() # if this returns a user, then the email already exists in database
 
-    if user: # if a user is found, we want to redirect back to signup page so user can try again  
+    if user:  
         flash('Email address already exists')
         return redirect(url_for('auth.signup'))
 
     # create new user with the form data. Hash the password so plaintext version isn't saved.
-    new_user = User(email=email, name=name, userType=userType, password=generate_password_hash(password, method='sha256'))
+    #new_user = User(email=email, name=name, userType=userType, password=generate_password_hash(password, method='sha256'))
+    if userType == None:  
+        flash('Please Select a User Type')
+        return redirect(url_for('auth.signup'))
+    elif userType == "Student" :
+        new_user = Student(email=email, name=name, userType=userType, password=generate_password_hash(password, method='sha256'))
+    elif userType == "Instructor" :
+        new_user = Instructor(email=email, name=name, userType=userType, password=generate_password_hash(password, method='sha256'))
+    elif userType == "Admin" :
+        new_user = Admin(email=email, name=name, userType=userType, password=generate_password_hash(password, method='sha256'))
 
     # add the new user to the database
     db.session.add(new_user)

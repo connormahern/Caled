@@ -2,7 +2,7 @@
 from flask import Blueprint, render_template, redirect, url_for, request, flash, session, jsonify, Flask, current_app, g
 from flask_login import login_required, current_user
 from flask_login.utils import login_fresh
-from .models import User, Message
+from .models import User, Message, Course, StudentCourses
 from flask_sqlalchemy import SQLAlchemy 
 from sqlalchemy.sql import text
 from .__init__ import app, db
@@ -68,6 +68,7 @@ def userData():
 
 
 
+
 @views.route('/profile')
 @login_required
 def profile():
@@ -82,7 +83,6 @@ def profile():
 def courses(): 
     return render_template('courses.html', course=course)
 
-
 rerouteName = None
 @views.route('/courses', methods=['GET', 'POST'])
 @login_required
@@ -95,7 +95,39 @@ def courses_post():
 @login_required
 def coursePage():
 
+
+
     return render_template('coursePage.html', rerouteName=rerouteName)
+
+@views.route('/courseAddition', methods=['POST'])
+@login_required
+def courses_addition_post():
+
+
+
+    current = User.query.filter(User.email == session['email']).first()
+    course = request.form.get('course')
+    semester = request.form.get('semester')
+    organizationName = request.form.get('organization')
+    description = request.form.get('description')
+    instructorId = current.id
+
+    new_course = Course(name=course, instructorId=instructorId, description=description, semester=semester, organization=organizationName)
+    db.session.add(new_course)
+    db.session.commit()
+
+
+    return redirect(url_for('views.coursePage'))
+
+@views.route('/courseAddition')
+def course_addition() :
+
+    current = User.query.filter(User.email == session['email']).first()
+    if current.userType == 'Admin' or current.userType == 'Instructor' :
+
+        return render_template('courseAddition.html')
+    else :
+        return redirect(url_for('views.profile'))
 
 @views.route('/index')
 @login_required
