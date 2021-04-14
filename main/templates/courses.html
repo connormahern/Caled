@@ -12,7 +12,8 @@
         <p class="card-text">{{ c.enrolledId }}</p>
 
         <form method = "post" action = "/courses">
-            <a href=coursePage > <button type = "submit" name = "courseReroute" value = c.id class="btn btn-primary" input=c.id> See Course Main Page </button></a>
+            <!-- <a href=coursePage > <button type = "courseReroute" name = "courseReroute" class="btn btn-primary" value={{ c.id }}> See Details </button></a> -->
+            <button type="submit" name="courseReroute" value= {{ c.id }} class="btn btn-primary"> See Details </button>
         </form>
     
         </div>

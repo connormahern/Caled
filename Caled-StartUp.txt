@@ -13,3 +13,13 @@
 6. flask run
 
 export APP_SETTINGS="instance.config_defult.DevelopmentConfig"
+
+
+## how to push changes to postgres heroku db 
+# flask db revision
+# flask db migrate
+# flask db stamp head 
+# flask db upgrade
+# python manage.py db migrate
+# python manage.py db stamp head
+# python manage.py db upgrade

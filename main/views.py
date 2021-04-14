@@ -2,7 +2,7 @@
 from flask import Blueprint, render_template, redirect, url_for, request, flash, session, jsonify, Flask, current_app, g
 from flask_login import login_required, current_user
 from flask_login.utils import login_fresh
-from .models import User, Message, Course, StudentCourses
+from .models import Instructor, User, Message, Course, StudentCourses, Organization, UserOrganizations
 from flask_sqlalchemy import SQLAlchemy 
 from sqlalchemy.sql import text
 from .__init__ import app, db
@@ -75,35 +75,88 @@ def profile():
 
     query = User.query.filter(User.email == session['email']).first()
     currentUser = { 'id' : query.id, 'name' : query.name, 'email' : query.email, 'userType' : query.userType}
+    userO = UserOrganizations.query.filter(currentUser['id'] == UserOrganizations.userId)
+    organizationList = []
 
-    return render_template('profile.html', current=currentUser)
+    for o in userO :
+        organizationList.append(o.organization)
+
+    organizationNames = []
+    for name in organizationList :
+        organizationNames.append(name.name)
+    
+
+    return render_template('profile.html', current=currentUser, organizationNames=organizationNames)
 
 @views.route('/courses')
 @login_required
-def courses(): 
-    return render_template('courses.html', course=course)
+def courses():
 
-rerouteName = None
+    coursesDict = []
+    current = User.query.filter(User.email == session['email']).first()
+    if current.userType == 'Instructor' :
+        intructorCourses = Course.query.filter(Course.instructorId == current.id)
+        coursesDict = []
+
+        for course in intructorCourses :
+            currentCorse = {
+                'id' : course.id,
+                'name' : course.name,
+                'teacherId' : course.instructorId,
+            }
+            enrolledStudents = []
+
+            for s in course.students :
+                enrolledStudents.append(s.studentId)
+            currentCorse['enrolledId'] = enrolledStudents
+            coursesDict.append(currentCorse)
+
+
+    elif current.userType == 'Student' :
+        studentCourses = StudentCourses.query.filter(StudentCourses.studentId == current.id)
+        # TODO FINISH STUDENT COURSE LIST IMPLENTATION
+
+        coursesDict = []
+
+        for course in studentCourses :
+            for s in course.course :
+                currentCorse = {
+                    'id' : course.id,
+                    'name' : course.name,
+                    'teacherId' : course.instructorId,
+                }
+                coursesDict.append(currentCorse)
+
+    return render_template('courses.html', course=coursesDict)
+
 @views.route('/courses', methods=['GET', 'POST'])
 @login_required
 def courses_post():
-    
-    rerouteName = request.form.get('courseReroute')
-    return redirect(url_for('views.coursePage'))
 
-@views.route('/coursePage')
+    if request.method == 'POST':
+        rerouteName = request.form['courseReroute']
+        return redirect(url_for('views.coursePage', rerouteName=rerouteName))
+        
+
+@views.route('/coursePage/<rerouteName>')
 @login_required
-def coursePage():
+def coursePage(rerouteName):
 
+    current = User.query.filter(User.email == session['email']).first()
+    courseQuery = Course.query.filter(Course.id == int(rerouteName)).first()
+    teacherQuery = User.query.filter(User.id == courseQuery.instructorId).first()
 
+    courseInfo = {'courseNumber' : courseQuery.name, 'instructorName' : teacherQuery.name, 'org' : courseQuery.organization, 
+    'courseDescription' : courseQuery.description}
 
-    return render_template('coursePage.html', rerouteName=rerouteName)
+    if current.id == courseQuery.instructorId :
+        return render_template('coursePageInstructor.html', courseInfo=courseInfo)
+    else : 
+        return render_template('coursePage.html', courseInfo=courseInfo)
 
 @views.route('/courseAddition', methods=['POST'])
 @login_required
 def courses_addition_post():
-
-
 
     current = User.query.filter(User.email == session['email']).first()
     course = request.form.get('course')
@@ -117,7 +170,7 @@ def courses_addition_post():
     db.session.commit()
 
 
-    return redirect(url_for('views.coursePage'))
+    return redirect(url_for('views.courses'))
 
 @views.route('/courseAddition')
 def course_addition() :
@@ -126,6 +179,36 @@ def course_addition() :
     if current.userType == 'Admin' or current.userType == 'Instructor' :
 
         return render_template('courseAddition.html')
+    else :
+        return redirect(url_for('views.profile'))
+
+
+@views.route('/courseStudentAddition', methods=['POST'])
+@login_required
+def courses_student_addition_post():
+
+    try :
+        courseName = request.form.get('courseName')
+        course = Course.query.filter(Course.name == courseName).first()
+        studentEmail = request.form.get('studentEmail')
+        student = User.query.filter(User.email == studentEmail).first()
+
+        new_student = StudentCourses(courseId=course.id, studentId=student.id)
+        db.session.add(new_student)
+        db.session.commit()
+
+    except :
+        flash('No User with this Email Adress! Please try again!')
+        return redirect(url_for('views.course_student_addition'))
+    
+    return redirect(url_for('views.courses'))
+
+@views.route('/courseStudentAddition')
+def course_student_addition() :
+
+    current = User.query.filter(User.email == session['email']).first()
+    if current.userType == 'Admin' or current.userType == 'Instructor' :
+        return render_template('courseStudentAddition.html')
     else :
         return redirect(url_for('views.profile'))
 
@@ -208,6 +291,65 @@ def message_post():
 
     return redirect(url_for('views.messages'))
 
+
+#organization back-end implementation
+@views.route('/organizations', methods=['GET', 'POST']) #organizations page lists all organizations associated with the admin 
+@login_required
+def organizations(): 
+    current = User.query.filter(User.email == session['email']).first() #get current user (admin)
+    if current.userType == 'Admin':
+        adminId = current.id
+        organizations = Organization.query.filter(adminId=adminId).first() #locate all organizations associated with admin
+        return render_template('organizations.html', organizations=organizations) #returns organizations list to organizations page
+    else:
+        return redirect(url_for('views.profile')) #if user is not an admin, they are redirected to the profile page 
+
+
+@views.route('/organizationAddition', methods=['POST'])
+@login_required
+def organization_addition_post():
+
+
+
+    current = User.query.filter(User.email == session['email']).first()
+    organizationName = request.form.get('organization')
+    adminId = current.id
+
+    newOrganization = Organization(name=organizationName, adminId=adminId)
+    db.session.add(newOrganization)
+    db.session.commit()
+
+
+    return redirect(url_for('views.profile'))
+
+
+@views.route('/organizationAddition')
+def organization_addition() :
+    current = User.query.filter(User.email == session['email']).first()
+    if current.userType == 'Admin':
+        return render_template('organizationAddition.html')
+    else :
+        return redirect(url_for('views.profile'))
+
+@views.route('/organizationPage')
+def organization_page() :
+    current = User.query.filter(User.email == session['email']).first()
+
+
+    if current.userType == 'Admin':
+        return render_template('organizationPage.html')
+    else :
+        return redirect(url_for('views.profile'))
+
+@views.route('/organizationPage', methods=['POST'])
+def organization_page_post() :
+    current = User.query.filter(User.email == session['email']).first()
+
+    
+
+    
+    
+    return render_template('organizationPage.html')
 @views.route('/calendar-events')
 @login_required
 def calendar_events():
@@ -233,20 +375,6 @@ def calendar_events():
 
     
     return render_template('calendar.html')
-
-
-#def assignment
-
-#def calender
-
-#def courses
-
-#def messgaes
-
-#Find ways to verify that this person is admin
-#def admin_add_to_organzation
-    #search function for admins to find sutdents and add them to a specific organization
-    #only searching for student on the entire platform
     
 
 

@@ -335,3 +335,113 @@
 	DROP TABLE "User"
 2021-04-04 23:07:51.997 EDT [5819] ERROR:  relation "course" does not exist at character 15
 2021-04-04 23:07:51.997 EDT [5819] STATEMENT:  select * from Course;
+2021-04-05 17:05:31.622 EDT [2027] LOG:  received fast shutdown request
+2021-04-05 17:05:31.624 EDT [2027] LOG:  aborting any active transactions
+2021-04-05 17:05:31.627 EDT [2027] LOG:  background worker "logical replication launcher" (PID 2034) exited with exit code 1
+2021-04-05 17:05:31.628 EDT [2029] LOG:  shutting down
+2021-04-05 17:05:31.646 EDT [2027] LOG:  database system is shut down
+2021-04-08 13:09:58.525 EDT [18476] LOG:  starting PostgreSQL 13.2 on x86_64-apple-darwin19.6.0, compiled by Apple clang version 11.0.3 (clang-1103.0.32.62), 64-bit
+2021-04-08 13:09:58.528 EDT [18476] LOG:  listening on IPv6 address "::1", port 5432
+2021-04-08 13:09:58.528 EDT [18476] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2021-04-08 13:09:58.529 EDT [18476] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2021-04-08 13:09:58.535 EDT [18477] LOG:  database system was shut down at 2021-04-05 17:05:31 EDT
+2021-04-08 13:09:58.550 EDT [18476] LOG:  database system is ready to accept connections
+2021-04-10 17:20:42.262 EDT [29531] ERROR:  cannot drop table "Course" because other objects depend on it
+2021-04-10 17:20:42.262 EDT [29531] DETAIL:  constraint StudentCourses_courseId_fkey on table "StudentCourses" depends on table "Course"
+2021-04-10 17:20:42.262 EDT [29531] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2021-04-10 17:20:42.262 EDT [29531] STATEMENT:  
+	DROP TABLE "Course"
+2021-04-10 17:21:11.567 EDT [29549] ERROR:  cannot drop table "Course" because other objects depend on it
+2021-04-10 17:21:11.567 EDT [29549] DETAIL:  constraint StudentCourses_courseId_fkey on table "StudentCourses" depends on table "Course"
+2021-04-10 17:21:11.567 EDT [29549] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2021-04-10 17:21:11.567 EDT [29549] STATEMENT:  
+	DROP TABLE "Course"
+2021-04-10 17:21:18.656 EDT [29553] ERROR:  cannot drop table "Course" because other objects depend on it
+2021-04-10 17:21:18.656 EDT [29553] DETAIL:  constraint StudentCourses_courseId_fkey on table "StudentCourses" depends on table "Course"
+2021-04-10 17:21:18.656 EDT [29553] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2021-04-10 17:21:18.656 EDT [29553] STATEMENT:  
+	DROP TABLE "Course"
+2021-04-10 17:23:37.230 EDT [29635] ERROR:  cannot drop table "Course" because other objects depend on it
+2021-04-10 17:23:37.230 EDT [29635] DETAIL:  constraint StudentCourses_courseId_fkey on table "StudentCourses" depends on table "Course"
+2021-04-10 17:23:37.230 EDT [29635] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2021-04-10 17:23:37.230 EDT [29635] STATEMENT:  
+	DROP TABLE "Course"
+2021-04-10 17:23:53.330 EDT [29647] ERROR:  relation "Message" already exists
+2021-04-10 17:23:53.330 EDT [29647] STATEMENT:  
+	CREATE TABLE "Message" (
+		id SERIAL NOT NULL, 
+		message VARCHAR(100) NOT NULL, 
+		"senderId" INTEGER, 
+		"recipientId" INTEGER, 
+		"dateTime" TIMESTAMP WITHOUT TIME ZONE NOT NULL, 
+		"isRead" BOOLEAN, 
+		CONSTRAINT "Message_pkey" PRIMARY KEY (id), 
+		CONSTRAINT "Message_recipientId_fkey" FOREIGN KEY("recipientId") REFERENCES "User" (id) ON DELETE SET NULL, 
+		CONSTRAINT "Message_senderId_fkey" FOREIGN KEY("senderId") REFERENCES "User" (id) ON DELETE CASCADE
+	)
+	
+	
+2021-04-10 17:24:22.887 EDT [29673] ERROR:  cannot drop table "Course" because other objects depend on it
+2021-04-10 17:24:22.887 EDT [29673] DETAIL:  constraint StudentCourses_courseId_fkey on table "StudentCourses" depends on table "Course"
+2021-04-10 17:24:22.887 EDT [29673] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2021-04-10 17:24:22.887 EDT [29673] STATEMENT:  
+	DROP TABLE "Course"
+2021-04-10 17:33:59.837 EDT [30144] ERROR:  cannot drop table "Course" because other objects depend on it
+2021-04-10 17:33:59.837 EDT [30144] DETAIL:  constraint StudentCourses_courseId_fkey on table "StudentCourses" depends on table "Course"
+2021-04-10 17:33:59.837 EDT [30144] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2021-04-10 17:33:59.837 EDT [30144] STATEMENT:  
+	DROP TABLE "Course"
+2021-04-10 17:35:16.839 EDT [30206] ERROR:  cannot drop table "User" because other objects depend on it
+2021-04-10 17:35:16.839 EDT [30206] DETAIL:  constraint Instructor_id_fkey on table "Instructor" depends on table "User"
+2021-04-10 17:35:16.839 EDT [30206] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2021-04-10 17:35:16.839 EDT [30206] STATEMENT:  
+	DROP TABLE "User"
+2021-04-10 17:36:39.253 EDT [30267] ERROR:  relation "Course" does not exist
+2021-04-10 17:36:39.253 EDT [30267] STATEMENT:  
+	CREATE TABLE "StudentCourses" (
+		"courseId" INTEGER NOT NULL, 
+		"studentId" INTEGER NOT NULL, 
+		CONSTRAINT "StudentCourses_pkey" PRIMARY KEY ("courseId", "studentId"), 
+		CONSTRAINT "StudentCourses_courseId_fkey" FOREIGN KEY("courseId") REFERENCES "Course" (id) ON DELETE CASCADE, 
+		CONSTRAINT "StudentCourses_studentId_fkey" FOREIGN KEY("studentId") REFERENCES "Student" (id) ON DELETE SET NULL
+	)
+	
+	
+2021-04-10 17:40:00.552 EDT [30392] ERROR:  relation "Course" does not exist
+2021-04-10 17:40:00.552 EDT [30392] STATEMENT:  
+	CREATE TABLE "StudentCourses" (
+		"courseId" INTEGER NOT NULL, 
+		"studentId" INTEGER NOT NULL, 
+		CONSTRAINT "StudentCourses_pkey" PRIMARY KEY ("courseId", "studentId"), 
+		CONSTRAINT "StudentCourses_courseId_fkey" FOREIGN KEY("courseId") REFERENCES "Course" (id) ON DELETE CASCADE, 
+		CONSTRAINT "StudentCourses_studentId_fkey" FOREIGN KEY("studentId") REFERENCES "Student" (id) ON DELETE SET NULL
+	)
+	
+	
+2021-04-11 18:21:37.779 EDT [2244] LOG:  starting PostgreSQL 13.2 on x86_64-apple-darwin19.6.0, compiled by Apple clang version 11.0.3 (clang-1103.0.32.62), 64-bit
+2021-04-11 18:21:37.782 EDT [2244] LOG:  listening on IPv6 address "::1", port 5432
+2021-04-11 18:21:37.782 EDT [2244] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2021-04-11 18:21:37.782 EDT [2244] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2021-04-11 18:21:37.788 EDT [2245] LOG:  database system was interrupted; last known up at 2021-04-10 19:16:56 EDT
+2021-04-11 18:21:37.838 EDT [2245] LOG:  database system was not properly shut down; automatic recovery in progress
+2021-04-11 18:21:37.840 EDT [2245] LOG:  redo starts at 0/1AF40B8
+2021-04-11 18:21:37.840 EDT [2245] LOG:  invalid record length at 0/1AF41A0: wanted 24, got 0
+2021-04-11 18:21:37.840 EDT [2245] LOG:  redo done at 0/1AF4168
+2021-04-11 18:21:37.852 EDT [2244] LOG:  database system is ready to accept connections
+2021-04-12 15:37:02.158 EDT [9852] ERROR:  insert or update on table "Course" violates foreign key constraint "Course_instructorId_fkey"
+2021-04-12 15:37:02.158 EDT [9852] DETAIL:  Key (instructorId)=(1) is not present in table "Instructor".
+2021-04-12 15:37:02.158 EDT [9852] STATEMENT:  INSERT INTO "Course" (name, "instructorId", description, semester, organization) VALUES ('C100', 1, 'This is a Brand New Course (04-12-2021)', 'FA21', 'Select Organization') RETURNING "Course".id
+2021-04-13 17:44:50.347 EDT [16607] ERROR:  relation "course" does not exist at character 15
+2021-04-13 17:44:50.347 EDT [16607] STATEMENT:  SELECT * FROM COURSE;
+2021-04-13 17:45:03.306 EDT [16607] ERROR:  relation "course" does not exist at character 15
+2021-04-13 17:45:03.306 EDT [16607] STATEMENT:  SELECT * FROM Course;
+2021-04-13 18:05:26.427 EDT [17278] ERROR:  invalid input syntax for type integer: "course_student_addition" at character 287
+2021-04-13 18:05:26.427 EDT [17278] STATEMENT:  SELECT "Course".id AS "Course_id", "Course".name AS "Course_name", "Course"."instructorId" AS "Course_instructorId", "Course".description AS "Course_description", "Course".semester AS "Course_semester", "Course".organization AS "Course_organization" 
+	FROM "Course" 
+	WHERE "Course".id = 'course_student_addition' 
+	 LIMIT 1
+2021-04-14 13:30:47.716 EDT [38366] LOG:  unexpected EOF on client connection with an open transaction
+2021-04-14 13:42:07.390 EDT [38675] ERROR:  column StudentCourses.grade does not exist at character 126
+2021-04-14 13:42:07.390 EDT [38675] STATEMENT:  SELECT "StudentCourses"."courseId" AS "StudentCourses_courseId", "StudentCourses"."studentId" AS "StudentCourses_studentId", "StudentCourses".grade AS "StudentCourses_grade" 
+	FROM "StudentCourses" 
+	WHERE 2 = "StudentCourses"."courseId"

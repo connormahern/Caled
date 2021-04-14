@@ -1,27 +1,14 @@
 from flask_login import UserMixin
-from main import db
+from werkzeug.security import generate_password_hash, check_password_hash
+from . import db
 import datetime
 
 
-# class User(UserMixin, db.Model):
-
-#     __tablename__ = 'User'
-
-#     id = db.Column(db.Integer, primary_key=True) # primary keys are required by SQLAlchemy
-#     email = db.Column(db.String(100), unique=True)
-#     password = db.Column(db.String(100))
-#     name = db.Column(db.String(1000))
-
-#     #students = db.relationship('student', backref='user', lazy=True) 
-#     #instructors = db.relationship('instructor', backref='user', lazy=True)
-#     #admins = db.relationship('admin', backref='user', lazy=True)
-
-#     userType = db.Column(db.String(100)) #holds user selection for desired role (Admin/Student/Instructor)
-#     hasAccess = db.Column(db.Boolean) #indicates if a user has access to the service t/f
-    
-    
-#     def __repr__(self):
-#         return f"User('{self.name}','{self.email}', '{self.hasAccess}')"
+#Flask Migration
+#flask db revision
+#flask db migrate
+#flask db stamp head
+#flask db upgrade
 
 
 class User(UserMixin, db.Model):
@@ -35,7 +22,7 @@ class User(UserMixin, db.Model):
     sentMessages = db.relationship('Message', back_populates='sender', foreign_keys='Message.senderId')
     recievedMessages = db.relationship('Message', back_populates='recipient', foreign_keys='Message.recipientId')
     
-    #organizations = db.relationship('Organization', backref='User', lazy=True)
+    organizations = db.relationship('UserOrganizations', back_populates='user', foreign_keys='UserOrganizations.userId') #each user has a relationship with 'UserOrganizations' table
 
     userType = db.Column(db.String(100)) #holds user selection for desired role (Admin/Student/Instructor)
     hasAccess = db.Column(db.Boolean) #indicates if a user has access to the service t/f
@@ -46,34 +33,75 @@ class User(UserMixin, db.Model):
     }
     
     def set_password(self, password):
-        self.password = password
+        self.password = generate_password_hash(password)
     
     def __repr__(self):
         return f"User('{self.name}','{self.email}', '{self.hasAccess}')"
 
+
+# organization 
+# id, name, type, list_of_users
+class Organization(UserMixin, db.Model): #admin creates organization
+
+    __tablename__ = 'Organization'
+
+    id = db.Column(db.Integer, primary_key=True) # primary keys are required by SQLAlchemy
+    name = db.Column(db.String(1000))
+    adminId = db.Column(db.Integer, db.ForeignKey('Admin.id'), nullable=False) # foreign key that ties admin to an organization (admin can only create/delete organizations)
+    users =  db.relationship('UserOrganizations', back_populates='organization') #every user
+
+    def __repr__(self):
+        return f"Organization('{self.name}')"
+
+class UserOrganizations(UserMixin, db.Model): #admin then adds users to organization
+
+    __tablename__ = 'UserOrganizations'
+
+    organizationId =  db.Column(db.Integer, db.ForeignKey('Organization.id', ondelete='cascade'), primary_key=True)
+    organization = db.relationship('Organization', foreign_keys=organizationId)
+    userId = db.Column(db.Integer, db.ForeignKey('User.id', ondelete='set null'), primary_key=True)
+    user =  db.relationship('User', foreign_keys=userId)
+
+    def __repr__(self):
+        return f"UserOrganizations('{self.organizationId}', '{self.userId}')"
+
+
+    
+
+class Admin(User):
+
+    __tablename__ = 'Admin'
+
+    id = db.Column(db.ForeignKey('User.id'), primary_key=True) # primary keys are required by SQLAlchemy
+    adminOrganizations = db.relationship('Organization', backref='Admin', lazy=True)
+    
+    __mapper_args__ = {"polymorphic_identity": "Admin"}
+
+    # def set_password(self, password):
+    #     self.password = generate_password_hash(password)
+
+    def __repr__(self):
+        return f"Admin('{self.name}','{self.email}')"
+        
 class Instructor(User):
 
     __tablename__ = 'Instructor'
 
-    #id = db.Column(db.Integer, primary_key=True) # primary keys are required by SQLAlchemy
+
     id = db.Column(db.ForeignKey('User.id'), primary_key=True) # primary keys are required by SQLAlchemy
-    #email = db.Column(db.String(100), nullable=False, unique=True)
-    #password = db.Column(db.String(100), nullable=False)
-    #instructor_name = db.Column(db.String(1000))
     inststructorCourses = db.relationship('Course', backref='Instructor', lazy=True)
-    # messages = db.relationship('Message', backref='Instruct', lazy=True) #specifies 1:M relationship between user and message tables
-    # organizations = db.relationship('Organization', backref='Instructor', lazy=True)
-    #instructorCourses = db.relationship('Course', back_populates='instructor', foreign_keys='Course.instructorId')
+
 
     # def set_password(self, password):
     #     self.password = generate_password_hash(password)
 
     __mapper_args__ = {"polymorphic_identity": "Instructor"}
-    
-    
-	#def __repr__(self):
-	#	return f"Instructor('{self.name}','{self.email}')"
-    
+
+
+
+#     def __repr__(self):
+#         return f"Instructor('{self.name}','{self.email}')"
+
 class Student(User):
 
     __tablename__ = 'Student'
@@ -92,64 +120,8 @@ class Student(User):
     __mapper_args__ = {"polymorphic_identity": "Student"}
 
     def __repr__(self):
-        return f"Student('{self.name}','{self.email}')"      
-        
-class Admin(User):
+        return f"Student('{self.name}','{self.email}')"        
 
-    __tablename__ = 'Admin'
-
-    #id = db.Column(db.Integer, primary_key=True) # primary keys are required by SQLAlchemy
-    id = db.Column(db.ForeignKey('User.id'), primary_key=True) # primary keys are required by SQLAlchemy
-    #email = db.Column(db.String(100), unique=True)
-    #password = db.Column(db.String(100))
-    #admin_name = db.Column(db.String(1000))
-    
-    __mapper_args__ = {"polymorphic_identity": "Admin"}
-
-    # def set_password(self, password):
-    #     self.password = generate_password_hash(password)
-          
-    
-class Course(UserMixin, db.Model):
-
-    __tablename__ = 'Course'
-
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(1000))
-    instructorId = db.Column(db.Integer, db.ForeignKey('Instructor.id'), nullable=False) #foreign key from user to link to message table
-    # userId = db.Column(db.Integer, db.ForeignKey('User.id'), nullable=False)
-    #instructorId = db.Column(db.Integer, db.ForeignKey('Instructor.id', ondelete='cascade'))
-    #instructor = db.relationship('Instructor', foreign_keys=instructorId)
-    # studentId = db.Column(db.Integer, db.ForeignKey('Student.id', ondelete='set null'))
-    students =  db.relationship('StudentCourses', back_populates='course')
-    description = db.Column(db.String(10000))
-    semester = db.Column(db.String(100))
-    organization = db.Column(db.String(100))
-    #modules = db.relationship('Module', backref='Course', lazy=True)
-    
-
-    def __repr__(self):
-        return f"Course('{self.name}')"
-
-
-class StudentCourses(UserMixin, db.Model):
-
-    __tablename__ = 'StudentCourses'
-
-    # id = db.Column(db.Integer, primary_key=True)
-    # name = db.Column(db.String(1000))
-    # instructorId = db.Column(db.Integer, db.ForeignKey('Instructor.id'), nullable=False) #foreign key from user to link to message table
-    # userId = db.Column(db.Integer, db.ForeignKey('User.id'), nullable=False)
-    #instructorId = db.Column(db.Integer, db.ForeignKey('Instructor.id', ondelete='cascade'))
-    #instructor = db.relationship('Instructor', foreign_keys=instructorId)
-    courseId =  db.Column(db.Integer, db.ForeignKey('Course.id', ondelete='cascade'), primary_key=True)
-    course = db.relationship('Course', foreign_keys=courseId)
-    studentId = db.Column(db.Integer, db.ForeignKey('Student.id', ondelete='set null'), primary_key=True)
-    student =  db.relationship('Student', foreign_keys=studentId)
-
-
-    def __repr__(self):
-        return f"StudentCourses('{self.name}')"
 
 class Message(UserMixin, db.Model):
 
@@ -169,45 +141,92 @@ class Message(UserMixin, db.Model):
         return f"Message('{self.message}', '{self.dateTime}', '{self.isRead}')"
 
 
-#def access(): #method for admin to grant access to user (i.e. move a user row to a instructor/student table)
-    #needs to gain access to all users (not instructor/admins/students) in user table
+
+class Course(UserMixin, db.Model):
+
+    __tablename__ = 'Course'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(1000))
+    instructorId = db.Column(db.Integer, db.ForeignKey('Instructor.id'), nullable=False) #foreign key from user to link to message table
+    students =  db.relationship('StudentCourses', back_populates='course')
+    description = db.Column(db.String(10000))
+    semester = db.Column(db.String(100))
+    organization = db.Column(db.String(100))
+    #modules = db.relationship('Module', backref='Course', lazy=True)
     
-    #user.query.all() #returns all data (as a list) in user table that is allowed to be shown (__rep__ method dictates what is shown when this query is called)
+
+    def __repr__(self):
+        return f"Course('{self.name}')"
 
 
+class StudentCourses(UserMixin, db.Model):
 
-    #insert user to instructor/student table and delete user row from user table or deny access
+    __tablename__ = 'StudentCourses'
+
+    courseId =  db.Column(db.Integer, db.ForeignKey('Course.id', ondelete='cascade'), primary_key=True)
+    course = db.relationship('Course', foreign_keys=courseId)
+    studentId = db.Column(db.Integer, db.ForeignKey('Student.id', ondelete='set null'), primary_key=True)
+    student =  db.relationship('Student', foreign_keys=studentId)
+    grade = db.Column(db.Integer)
+
+
+    def __repr__(self):
+        return f"StudentCourses('{self.name}')"
+
+class Module(UserMixin, db.Model):
+
+    __tablename__ = 'Module'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(1000)) #Module 1, 2, etc
+    courseId = db.Column(db.Integer, db.ForeignKey('Course.id'), nullable=False) #foreign key from user to link to message table
+    assignments = db.relationship('Assignment', backref='Module', lazy=True)
+
+
+    def __repr__(self):
+        return f"Module('{self.name}')"
+
+class Assignment(UserMixin, db.Model):
+
+    __tablename__ = 'Assignment'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(1000))
+    moduleId = db.Column(db.Integer, db.ForeignKey('Module.id'), nullable=False)
+    #files = db.relationship('File', backref='Assignment', lazy=True)
+    dueDate = db.Column(db.DateTime, nullable=False, default=datetime.datetime.now())
+    fileLoc = db.Column(db.String(1000))
     
 
+    def __repr__(self):
+        return f"Assignment('{self.name}')"
 
-    #add a user to instructor table
+class AssignmentGrades(UserMixin, db.Model):
 
-    #newInstructor = Instructor(user.email, user.password, user.name)
-    #db.session.add(newInstructor) #adds instructor to instructor table in db
-    #db.session.commit() #commits changes to db
+    __tablename__ = 'AssignmentGrades'
 
-
-    #add a user to student table
-
-    #newStudent = Student(user.email, user.password, user.name)
-    #db.session.add(newStudent) #adds student to student table in db
-    #db.session.commit() #commits changes to db
-
-
-    #add a user to admin table
-
-    #newAdmin = Admin(user.email, user.password, user.name)
-    #db.session.add(newAdmin) #adds admin to admin table in db
-    #db.session.commit() #commits changes to db
+    assignmentId =  db.Column(db.Integer, db.ForeignKey('Assignment.id', ondelete='cascade'), primary_key=True)
+    assignment = db.relationship('Assignment', foreign_keys=assignmentId)
+    studentId = db.Column(db.Integer, db.ForeignKey('Student.id', ondelete='set null'), primary_key=True)
+    student =  db.relationship('Student', foreign_keys=studentId)
+    fileLoc = db.Column(db.String(1000))
+    grade = db.Column(db.Integer) 
+    
+    def __repr__(self):
+        return f"AssignmentGrades('{self.studentId}')"
 
 
+class Announcement(db.Model):
 
-##### SQLALCHEMY COMMAND LIST #####
-#db.create_all() # creates db
-#var = desiredTable(attribute1, attribute2, etc) #create a variable for a specific table 
-#var.id #returns unique id for variable
-#var.id.get(1) #returns a var with the unique id of 1
-#db.session.add(var) #creates new row in desired table with variable
-#db.session.commit() #commit changes to db
-#Table.query.all() #displays all data in the specified 'Table'
-#Table.query.filter_by(username='ctaddeuc').first() #returns all data that has the username 'ctaddeuc'
+    __tablename__ = 'Announcement'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(1000))
+    description = db.Column(db.String(1000))
+    dateTime = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow())
+    courseId = db.Column(db.Integer, db.ForeignKey('Course.id'), nullable=False) 
+
+
+    def __repr__(self):
+        return f"Announcement('{self.name}', '{self.description}')"  
