@@ -1,8 +1,10 @@
 
+import re
 from flask import Blueprint, render_template, redirect, url_for, request, flash, session, jsonify, Flask, current_app, g
 from flask_login import login_required, current_user
 from flask_login.utils import login_fresh
-from .models import Instructor, User, Message, Course, StudentCourses, Organization, UserOrganizations
+from werkzeug.wrappers import Request
+from .models import Announcement, Instructor, Module, User, Message, Course, StudentCourses, Organization, UserOrganizations, Assignment
 from flask_sqlalchemy import SQLAlchemy 
 from sqlalchemy.sql import text
 from .__init__ import app, db
@@ -72,19 +74,28 @@ def userData():
 @views.route('/profile')
 @login_required
 def profile():
-
+    #if user is admin query Organization table rather than UserOrganizations 
     query = User.query.filter(User.email == session['email']).first()
     currentUser = { 'id' : query.id, 'name' : query.name, 'email' : query.email, 'userType' : query.userType}
-    userO = UserOrganizations.query.filter(currentUser['id'] == UserOrganizations.userId)
-    organizationList = []
 
-    for o in userO :
-        organizationList.append(o.organization)
+    if query.userType == 'Admin':
+        userO = Organization.query.filter(currentUser['id'] == Organization.adminId)
+        #organizationList = []
+        organizationNames = []
+        for o in userO :
 
-    organizationNames = []
-    for name in organizationList :
-        organizationNames.append(name.name)
-    
+            organizationNames.append(o.name)
+      
+    else:
+        userO = UserOrganizations.query.filter(currentUser['id'] == UserOrganizations.userId)
+        organizationList = []
+
+        for o in userO :
+            organizationList.append(o.organization)
+
+        organizationNames = []
+        for name in organizationList :
+            organizationNames.append(name.name)
 
     return render_template('profile.html', current=currentUser, organizationNames=organizationNames)
 
@@ -136,7 +147,15 @@ def courses_post():
     if request.method == 'POST':
         rerouteName = request.form['courseReroute']
         return redirect(url_for('views.coursePage', rerouteName=rerouteName))
-        
+
+# @views.route('/coursePage/<rerouteName>', methods=['GET', 'POST'])
+# @login_required
+# def courses_page_post(rerouteName):
+
+#     if request.method == 'POST':
+#         rerouteName = request.form['modules']
+#         return redirect(url_for('views.modules_page', courseName=rerouteName))
+
 
 @views.route('/coursePage/<rerouteName>')
 @login_required
@@ -145,9 +164,46 @@ def coursePage(rerouteName):
     current = User.query.filter(User.email == session['email']).first()
     courseQuery = Course.query.filter(Course.id == int(rerouteName)).first()
     teacherQuery = User.query.filter(User.id == courseQuery.instructorId).first()
+    courseAnnouncements = Announcement.query.filter(courseQuery.name == Announcement.name)
 
-    courseInfo = {'courseNumber' : courseQuery.name, 'instructorName' : teacherQuery.name, 'org' : courseQuery.organization, 
-    'courseDescription' : courseQuery.description}
+    courseInfo = {'courseId' : rerouteName, 'courseNumber' : courseQuery.name, 'instructorName' : teacherQuery.name, 'org' : courseQuery.organization, 
+    'courseDescription' : courseQuery.description, 'intstructorEmail' : teacherQuery.email}
+
+    announcementList = []
+    countA = (Announcement.query.filter(courseQuery.name == Announcement.name).count()) - 1 
+    lengthA = countA
+    while countA > (lengthA - 3) :
+        announ = courseAnnouncements[countA]
+        time = str(announ.dateTime)
+        time = time[0:16]
+        currentAnnoun = {'courseName' : announ.name, 'subjectLine' : announ.subject, 'announcement' : announ.description, 'time' : time}
+        announcementList.append(currentAnnoun)
+        countA -= 1
+
+    courseInfo['announcements'] = announcementList
+
+    courseModuels = Module.query.filter(courseQuery.id == Module.courseId)
+    moduleList = []
+
+    # countM = (Module.query.filter(courseQuery.id == Module.courseId)).count() - 1 
+    # lengthM = countM
+    # while countM > (lengthM - 3) :
+    #     mod = courseModuels[countM]
+    #     currentMod= {'moduleName' : mod.name}
+    #     moduleList.append(currentMod)
+    #     countM -= 1
+    # courseInfo['modules'] = moduleList
+    
+    courseAssignment = Assignment.query.filter(courseQuery.id == Assignment.courseId)
+    assignmentList = []
+    # countAs = (Assignment.query.filter(courseQuery.id == Assignment.courseId)).count() - 1 
+    # lengthAs = countAs
+    # while countAs > (lengthAs - 3) :
+    #     as = courseAssignment[countAs]
+    #     currentAs= {'name' : as.name, 'desc' : as.description}
+    #     assignmentList.append(assignmentList)
+    #     countAs -= 1
+    # courseInfo['assignments'] = assignmentList
 
     if current.id == courseQuery.instructorId :
         return render_template('coursePageInstructor.html', courseInfo=courseInfo)
@@ -171,6 +227,72 @@ def courses_addition_post():
 
 
     return redirect(url_for('views.courses'))
+
+@views.route('/newAnnouncement')
+def new_announcment() :
+    return render_template('newAnnouncement.html')
+
+@views.route('/newAnnouncement', methods=['POST'])
+def new_announcment_post():
+
+    current = User.query.filter(User.email == session['email']).first()
+    courseName = request.form.get('courseName')
+    subjectLine = request.form.get('subjectLine')
+    announcement = request.form.get('Announcement')
+    
+    try :
+        course = Course.query.filter(Course.name == courseName).first()
+
+        if(course.instructorId == current.id):
+            new_announcment = Announcement(name=courseName, description=announcement, subject=subjectLine, courseId=course.id)
+            db.session.add(new_announcment)
+            db.session.commit()
+        else :
+            flash('Sorry but you are not in the Instructor of this' + str(course.name))
+            return redirect(url_for('views.new_announcment'))
+
+    except :
+        flash('Course Not Found! Try Again!')
+        return redirect(url_for('views.new_announcment'))
+
+
+    return redirect(url_for('views.coursePage', rerouteName=course.id))
+
+@views.route('/newAssignment')
+def new_assignment() :
+    return render_template('newAssignment.html')
+
+@views.route('/newAssignment', methods=['POST'])
+def new_assignment_post():
+
+    current = User.query.filter(User.email == session['email']).first()
+    courseName = request.form.get('courseName')
+    subjectLine = request.form.get('subjectLine')
+    
+    try :
+        course = Course.query.filter(Course.name == courseName).first()
+
+        if(course.instructorId == current.id):
+            new_assignment = Assignment(name=courseName, desc=subjectLine, courseId=course.id)
+            db.session.add(new_announcment)
+            db.session.commit()
+        else :
+            flash('Sorry but you are not in the Instructor of this' + str(course.name))
+            return redirect(url_for('views.new_announcment'))
+
+    except :
+        flash('Course Not Found! Try Again!')
+        return redirect(url_for('views.new_announcment'))
+
+
+    return redirect(url_for('views.coursePage', rerouteName=course.id))
+
+# @views.route('/modules/<courseName>')
+# def modules_page(courseName) :
+
+#     return render_template('modules.html', courseName=courseName)
+
+    
 
 @views.route('/courseAddition')
 def course_addition() :
@@ -293,17 +415,48 @@ def message_post():
 
 
 #organization back-end implementation
-@views.route('/organizations', methods=['GET', 'POST']) #organizations page lists all organizations associated with the admin 
+@views.route('/organizations') #organizations page lists all organizations associated with the admin 
 @login_required
 def organizations(): 
     current = User.query.filter(User.email == session['email']).first() #get current user (admin)
     if current.userType == 'Admin':
         adminId = current.id
-        organizations = Organization.query.filter(adminId=adminId).first() #locate all organizations associated with admin
+        organizations = Organization.query.filter(adminId==adminId) #locate all organizations associated with admin
+        
         return render_template('organizations.html', organizations=organizations) #returns organizations list to organizations page
+    
     else:
         return redirect(url_for('views.profile')) #if user is not an admin, they are redirected to the profile page 
 
+@views.route('/organizations', methods=['GET', 'POST'])
+@login_required
+def organization_post():
+
+    if request.method == 'POST':
+        rerouteName = request.form['orgPageReroute']
+        return redirect(url_for('views.organizationPage', rerouteName=rerouteName))
+        
+
+@views.route('/organizationPage/<rerouteName>')
+@login_required
+def organizationPage(rerouteName):
+
+    current = User.query.filter(User.email == session['email']).first()
+    orgQuery = Organization.query.filter(Organization.id == int(rerouteName)).first()
+    userQuery = UserOrganizations.query.filter(UserOrganizations.organizationId == int(rerouteName))
+    users = []
+    
+    for i in userQuery:
+        users.append(i.userId) #get user ids associated with organizations
+
+    userList = []
+    for j in users:
+        query = User.quer.filter(User.id == users.j).first() #find user email and provide it to organization
+        userList.append(query.email)
+
+    orgInfo = {'name' : orgQuery.name, 'admin' : current.email, 'users' : userList}
+
+    return render_template('organizationPage.html', orgInfo=orgInfo)
 
 @views.route('/organizationAddition', methods=['POST'])
 @login_required
@@ -312,7 +465,7 @@ def organization_addition_post():
 
 
     current = User.query.filter(User.email == session['email']).first()
-    organizationName = request.form.get('organization')
+    organizationName = request.form.get('organizationName')
     adminId = current.id
 
     newOrganization = Organization(name=organizationName, adminId=adminId)
@@ -320,7 +473,7 @@ def organization_addition_post():
     db.session.commit()
 
 
-    return redirect(url_for('views.profile'))
+    return redirect(url_for('views.organizations'))
 
 
 @views.route('/organizationAddition')
@@ -331,25 +484,10 @@ def organization_addition() :
     else :
         return redirect(url_for('views.profile'))
 
-@views.route('/organizationPage')
-def organization_page() :
-    current = User.query.filter(User.email == session['email']).first()
-
-
-    if current.userType == 'Admin':
-        return render_template('organizationPage.html')
-    else :
-        return redirect(url_for('views.profile'))
-
-@views.route('/organizationPage', methods=['POST'])
-def organization_page_post() :
-    current = User.query.filter(User.email == session['email']).first()
-
-    
 
     
     
-    return render_template('organizationPage.html')
+#     return render_template('organizationPage.html')
 @views.route('/calendar-events')
 @login_required
 def calendar_events():

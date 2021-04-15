@@ -25,8 +25,15 @@
 						<h5 class="card-header mb-3">{{current['name']}}</h5>
 						<p class="card-text">Email: {{current['email']}}</p>
 						<p class="card-text">User Type : {{current['userType']}}</p>
-						<p class="card-text">Organizations : {{organizationNames}}</p>
-		
+						<p class="card-text">Organizations :</p> 
+						{% for o in organizationNames %}
+							<p class="card-text">{{o}}</p>
+						{% endfor %}
+						{% if current.userType == 'Admin' %}
+							<form action="/organizations">
+								<a href="organizations.html"><button type="submit" name="organizations" class="btn btn-primary custom"> View Organizations </button></a> 
+							</form> 
+						{% endif %}	
 						</div>
 					</div>
 				</div>

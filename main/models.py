@@ -5,9 +5,9 @@ import datetime
 
 
 #Flask Migration
-#flask db revision
-#flask db migrate
+#flask db revision 
 #flask db stamp head
+#flask db migrate
 #flask db upgrade
 
 
@@ -193,6 +193,8 @@ class Assignment(UserMixin, db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(1000))
+    courseId = db.Column(db.Integer, db.ForeignKey('Course.id'), nullable=False)
+    description = db.Column(db.String(1000))
     moduleId = db.Column(db.Integer, db.ForeignKey('Module.id'), nullable=False)
     #files = db.relationship('File', backref='Assignment', lazy=True)
     dueDate = db.Column(db.DateTime, nullable=False, default=datetime.datetime.now())
@@ -224,6 +226,7 @@ class Announcement(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(1000))
     description = db.Column(db.String(1000))
+    subject = db.Column(db.String(1000))
     dateTime = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow())
     courseId = db.Column(db.Integer, db.ForeignKey('Course.id'), nullable=False) 
 

@@ -445,3 +445,20 @@
 2021-04-14 13:42:07.390 EDT [38675] STATEMENT:  SELECT "StudentCourses"."courseId" AS "StudentCourses_courseId", "StudentCourses"."studentId" AS "StudentCourses_studentId", "StudentCourses".grade AS "StudentCourses_grade" 
 	FROM "StudentCourses" 
 	WHERE 2 = "StudentCourses"."courseId"
+2021-04-14 15:55:08.444 EDT [43425] ERROR:  relation "Announcemnet" does not exist at character 15
+2021-04-14 15:55:08.444 EDT [43425] STATEMENT:  select * from "Announcemnet";
+2021-04-14 15:57:12.577 EDT [43505] ERROR:  relation "Announcemnet" does not exist at character 15
+2021-04-14 15:57:12.577 EDT [43505] STATEMENT:  select * from "Announcemnet";
+2021-04-14 15:57:16.812 EDT [43505] ERROR:  relation "Announcemnet" does not exist at character 15
+2021-04-14 15:57:16.812 EDT [43505] STATEMENT:  select * from "Announcemnet";
+2021-04-14 16:19:25.222 EDT [44508] ERROR:  insert or update on table "Course" violates foreign key constraint "Course_instructorId_fkey"
+2021-04-14 16:19:25.222 EDT [44508] DETAIL:  Key (instructorId)=(5) is not present in table "Instructor".
+2021-04-14 16:19:25.222 EDT [44508] STATEMENT:  INSERT INTO "Course" (name, "instructorId", description, semester, organization) VALUES ('C-300 Mobile App Development', 5, 'New Course', 'FA21', 'Select Organization') RETURNING "Course".id
+2021-04-15 13:04:44.499 EDT [52238] LOG:  unexpected EOF on client connection with an open transaction
+2021-04-15 13:06:54.372 EDT [52283] LOG:  unexpected EOF on client connection with an open transaction
+2021-04-15 13:07:39.863 EDT [52355] LOG:  unexpected EOF on client connection with an open transaction
+2021-04-15 13:08:37.359 EDT [52389] LOG:  unexpected EOF on client connection with an open transaction
+2021-04-15 13:09:35.271 EDT [52437] LOG:  unexpected EOF on client connection with an open transaction
+2021-04-15 13:18:51.783 EDT [52941] ERROR:  syntax error at or near "psql" at character 1
+2021-04-15 13:18:51.783 EDT [52941] STATEMENT:  psql
+	select * from "Assignment";

@@ -3,10 +3,17 @@
 {% block content %}
 
 <div class="card-deck" style="padding-top: 10px;">
-    
-    {% for o in organizations %}
-    
-    {% endfor %}
+    <div class="card bg-light mb-3">
+        <div class="card-body">
+        <h5 class="card-header mb-3">Organization: {{ orgInfo.name }}</h5>
+        <h6 class="card-title">Administrator: {{orgInfo.admin}}</h6>
+        <p class="card-text">Users: </p>
+        {% for o in orgInfo.userList %}
+            <p class="card-text">{{o}}</p>
+        {% endfor %}
+
+        </div>
+    </div>
     
 </div>
 
